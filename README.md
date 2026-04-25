@@ -19,6 +19,20 @@ This repository provides an open reference framework for applying Knowledge Bloc
 * humanitarian risk modeling
 * AI decision pipelines
 
+## Quick Start
+
+Run the example:
+
+```bash
+python reference-implementation/python/evaluate_quantum_decision.py
+```
+
+This will:
+
+- read a quantum output example  
+- apply a Knowledge Block rule  
+- produce a deterministic decision  
+- generate a receipted hash (proof of evaluation)
 ---
 
 ## Core Principle
