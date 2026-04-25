@@ -9,14 +9,5 @@
     "rule_id": "kb_rule_001",
     "description": "Accept if 00 + 11 >= 0.95",
     "threshold": 0.95
-  },
-  "evaluation": {
-    "computed_value": 0.97,
-    "decision": "PASS"
-  },
-  "receipt": {
-    "status": "evaluated",
-    "rule_id": "kb_rule_001",
-    "timestamp": "2026-01-01T12:00:00Z"
   }
 }
