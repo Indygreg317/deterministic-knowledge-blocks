@@ -1,9 +1,5 @@
 # Quantum Use Case
 
-This shows how probabilistic outputs can be turned into structured, deterministic decisions using Knowledge Blocks.
-
-# Quantum Use Case
-
 ## Purpose
 
 This use case demonstrates how Knowledge Blocks can be used to evaluate probabilistic quantum outputs and produce deterministic, auditable decision outcomes.
