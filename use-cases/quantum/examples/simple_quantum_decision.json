@@ -15,8 +15,8 @@
     "decision": "PASS"
   },
   "receipt": {
-    "timestamp": "2026-01-01T12:00:00Z",
     "status": "evaluated",
-    "note": "example only"
+    "rule_id": "kb_rule_001",
+    "timestamp": "2026-01-01T12:00:00Z"
   }
 }
