@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Deterministic Outcome",
+  "type": "object",
+  "required": ["decision", "computed_value"],
+  "properties": {
+    "decision": { "type": "string" },
+    "computed_value": { "type": ["number", "string", "object"] },
+    "reason": { "type": "string" }
+  }
+}

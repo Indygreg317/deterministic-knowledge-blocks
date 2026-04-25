@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Knowledge Block",
+  "type": "object",
+  "required": ["block_id", "inputs", "constraints", "logic"],
+  "properties": {
+    "block_id": { "type": "string" },
+    "description": { "type": "string" },
+    "inputs": { "type": "object" },
+    "constraints": { "type": "object" },
+    "logic": { "type": "string" },
+    "verification": { "type": "object" }
+  }
+}
