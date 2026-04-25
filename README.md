@@ -1,3 +1,12 @@
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/ff8fed5b-2615-4d1f-ac06-79100ba2f7d6" />
+
+
+
+
+
+
+
+
 # Deterministic Knowledge Blocks
 
 ## Overview
