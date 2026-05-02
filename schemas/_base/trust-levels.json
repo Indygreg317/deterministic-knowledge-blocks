@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dkb.example.com/schemas/_base/trust-levels.json",
+  "title": "Trust Levels",
+  "description": "Shared trust level definitions",
+  "type": "object",
+  "definitions": {
+    "determinism_level": {
+      "type": "string",
+      "enum": [
+        "STRICT_DETERMINISTIC",
+        "BOUNDED_DETERMINISTIC",
+        "HUMAN_GOVERNED",
+        "NON_REPLAYABLE"
+      ],
+      "description": "Classification of how reproducible/verifiable this decision is"
+    },
+    "trust_level_descriptions": {
+      "type": "object",
+      "properties": {
+        "STRICT_DETERMINISTIC": {
+          "type": "string",
+          "const": "Identical inputs + rules produce identical hash every time. Full replay verification possible."
+        },
+        "BOUNDED_DETERMINISTIC": {
+          "type": "string",
+          "const": "Same inputs + rules produce same decision within declared tolerance. Bounded replay verification possible."
+        },
+        "HUMAN_GOVERNED": {
+          "type": "string",
+          "const": "Human reviewed inputs and recorded this decision. Governance verification possible, computation replay not possible."
+        },
+        "NON_REPLAYABLE": {
+          "type": "string",
+          "const": "Snapshot only at point in time. No replay verification possible."
+        }
+      }
+    }
+  }
+}
