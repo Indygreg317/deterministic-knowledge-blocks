@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dkb.example.com/schemas/_base/hash-definitions.json",
+  "title": "Hash Definitions",
+  "description": "Shared hash field definitions for all DKB primitives",
+  "type": "object",
+  "definitions": {
+    "sha256_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash in lowercase hexadecimal format (64 characters)",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "canonical_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Canonical SHA-256 hash of receipt - immutable after issuance",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "payload_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of input payload in canonical form",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of state at a point in time",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "prev_state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of previous state in chain",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "next_state_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of next state in chain",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "input_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of intent inputs",
+      "minLength": 64,
+      "maxLength": 64
+    },
+    "replay_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of replay verification result",
+      "minLength": 64,
+      "maxLength": 64
+    }
+  }
+}
