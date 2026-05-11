@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/evaluator-policy.schema.json",
+  "title": "Evaluator Policy",
+  "description": "Defines deterministic evaluation behavior, escalation rules, reviewer requirements, and receipt generation policy.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "policy_id",
+    "policy_version",
+    "allowed_decisions",
+    "receipt_required"
+  ],
+  "properties": {
+    "policy_id": { "type": "string" },
+    "policy_version": { "type": "string" },
+    "description": { "type": "string" },
+    "allowed_decisions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["PASS", "FAIL", "ESCALATE"]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "receipt_required": { "type": "boolean" },
+    "review_required_on": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["PASS", "FAIL", "ESCALATE"]
+      },
+      "uniqueItems": true
+    },
+    "failure_behavior": {
+      "type": "string",
+      "enum": ["halt", "escalate", "log_only"]
+    },
+    "audit": {
+      "type": "object",
+      "properties": {
+        "hash_inputs": { "type": "boolean" },
+        "hash_outputs": { "type": "boolean" },
+        "store_receipts": { "type": "boolean" }
+      }
+    }
+  }
+}
