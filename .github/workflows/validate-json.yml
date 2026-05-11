@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass]
+    branches: [main, repo-completion-pass, robustness-validation-pass]
   pull_request:
     branches: [main]
 
@@ -19,7 +19,11 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Validate JSON files
+      - name: Install validation dependencies
+        run: |
+          pip install -r reference-implementation/python/requirements.txt
+
+      - name: Validate JSON files parse correctly
         run: |
           python - <<'PY'
           import json
@@ -40,6 +44,10 @@ jobs:
 
           print('All JSON files parsed successfully.')
           PY
+
+      - name: Validate examples against schemas
+        run: |
+          python reference-implementation/python/validate_examples.py
 
       - name: Run reference evaluator against PASS example
         run: |
