@@ -1,0 +1,14 @@
+{
+  "receipt_id": "receipt-pass-001",
+  "timestamp": "2026-05-10T18:00:00Z",
+  "status": "PASS",
+  "rule_version": "0.1.0",
+  "input_hash": "sha256:bellstatepasshash",
+  "evaluator": "reference-deterministic-evaluator",
+  "contract_id": "bell-state-correlation-contract",
+  "policy_id": "basic-deterministic-policy",
+  "evaluated_fields": ["00", "11"],
+  "computed_value": 0.97,
+  "threshold": 0.95,
+  "decision_reason": "Combined probability of correlated Bell states exceeded deterministic threshold."
+}

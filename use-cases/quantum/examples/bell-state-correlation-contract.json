@@ -1,0 +1,19 @@
+{
+  "contract_id": "bell-state-correlation-contract",
+  "contract_version": "0.1.0",
+  "domain": "quantum-output-evaluation",
+  "description": "Accept a Bell-state-style output only when the correlated states 00 and 11 meet the deterministic threshold.",
+  "evaluation_target": {
+    "operator": "sum_gte",
+    "threshold": 0.95,
+    "fields": ["00", "11"]
+  },
+  "rules": [
+    {
+      "rule_id": "bell-correlation-threshold",
+      "decision_on_pass": "PASS",
+      "decision_on_fail": "FAIL"
+    }
+  ],
+  "allowed_decisions": ["PASS", "FAIL", "ESCALATE"]
+}

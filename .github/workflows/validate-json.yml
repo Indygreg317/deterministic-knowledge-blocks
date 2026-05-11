@@ -1,0 +1,52 @@
+name: Validate JSON and Reference Evaluator
+
+on:
+  push:
+    branches: [main, repo-completion-pass]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate JSON files
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          failures = []
+          for path in Path('.').rglob('*.json'):
+              try:
+                  json.loads(path.read_text(encoding='utf-8'))
+              except Exception as exc:
+                  failures.append(f'{path}: {exc}')
+
+          if failures:
+              print('JSON validation failed:')
+              for failure in failures:
+                  print(failure)
+              raise SystemExit(1)
+
+          print('All JSON files parsed successfully.')
+          PY
+
+      - name: Run reference evaluator against PASS example
+        run: |
+          python reference-implementation/python/evaluate_decision_contract.py \
+            --output use-cases/quantum/examples/bell-state-output-pass.json
+
+      - name: Run reference evaluator against FAIL example
+        run: |
+          python reference-implementation/python/evaluate_decision_contract.py \
+            --output use-cases/quantum/examples/bell-state-output-fail.json

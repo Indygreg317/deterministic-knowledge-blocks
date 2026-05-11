@@ -1,0 +1,14 @@
+{
+  "policy_id": "basic-deterministic-policy",
+  "policy_version": "0.1.0",
+  "description": "Reference evaluator policy for deterministic Bell-state evaluation.",
+  "allowed_decisions": ["PASS", "FAIL", "ESCALATE"],
+  "receipt_required": true,
+  "review_required_on": ["ESCALATE"],
+  "failure_behavior": "halt",
+  "audit": {
+    "hash_inputs": true,
+    "hash_outputs": true,
+    "store_receipts": true
+  }
+}

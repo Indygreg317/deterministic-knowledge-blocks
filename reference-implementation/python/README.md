@@ -1,26 +1,45 @@
-# Python Reference Implementation
+# Python Reference Evaluator
 
-This folder contains simple example evaluators for Knowledge Block decision logic.
+## Purpose
 
-## Quantum Example
+This reference implementation demonstrates how a deterministic evaluation layer can be applied to probabilistic quantum-style outputs.
 
-Run:
+The evaluator:
+
+- loads a probabilistic output distribution
+- applies a deterministic decision contract
+- evaluates the output against explicit constraints
+- generates a deterministic PASS / FAIL decision
+- emits a structured execution receipt
+
+This does not make the source system deterministic.
+
+It makes the downstream evaluation layer deterministic, traceable, and auditable.
+
+---
+
+## Run the Reference Example
+
+From the repository root:
 
 ```bash
-python evaluate_quantum_decision.py
+python reference-implementation/python/evaluate_decision_contract.py
 ```
 
-Expected output:
+The default execution path evaluates the Bell-state reference output against the Bell-state decision contract using the basic evaluator policy.
 
-```json
-{
-  "computed_value": 0.97,
-  "threshold": 0.95,
-  "decision": "PASS",
-  "receipt": {
-    "status": "evaluated",
-    "rule_id": "kb_rule_001",
-    "timestamp": "2026-01-01T12:00:00Z"
-  }
-}
+---
+
+## Reference Flow
+
+```text
+Probabilistic Output
+  ↓
+Decision Contract
+  ↓
+Deterministic Evaluation
+  ↓
+Execution Receipt
+  ↓
+Audit Record
 ```

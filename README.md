@@ -1,162 +1,164 @@
-
-
-
-
-
 # Deterministic Knowledge Blocks
 
-## Overview
+Deterministic Knowledge Blocks are governed decision units for applying explicit, repeatable evaluation rules to uncertain or probabilistic inputs.
 
-Deterministic Knowledge Blocks are structured decision units for converting uncertain or probabilistic inputs into repeatable, auditable downstream decisions.
-
-This repository provides an open reference framework for applying Knowledge Blocks to domains where the source system may remain probabilistic, uncertain, or noisy, including:
-
-- quantum output evaluation
-- AI decision pipelines
-- humanitarian risk modeling
-- operational authorization workflows
-
-The framework does **not** remove uncertainty from source systems.
-
-It structures how decisions are made around uncertainty.
-
----
-
-## Core Principle
+This repository provides a reference framework for converting structured uncertainty into auditable downstream decisions without pretending the source system itself has become deterministic.
 
 > We do not make uncertain systems deterministic.  
 > We make the evaluation layer deterministic, traceable, and auditable.
 
-For quantum systems, this means:
+---
 
-> Quantum outputs remain probabilistic.  
-> The Knowledge Block defines how those outputs are evaluated before any downstream decision is made.
+## What This Repository Is
+
+This repository is a reference architecture for deterministic evaluation around uncertain systems.
+
+It demonstrates how to:
+
+- capture uncertain outputs as structured input artifacts
+- evaluate those artifacts through explicit Decision Contracts
+- apply governed Evaluator Policies
+- produce PASS / FAIL / ESCALATE decisions
+- generate hash-linked Execution Receipts
+- preserve auditability and replay boundaries
+
+The initial working use case is quantum output evaluation, where probabilistic distributions are evaluated through deterministic downstream rules.
 
 ---
 
-## Core Flow
+## What This Repository Is Not
+
+This repository does not:
+
+- make quantum systems deterministic
+- eliminate uncertainty from AI or probabilistic systems
+- provide production-ready safety infrastructure
+- replace domain experts, medical experts, humanitarian experts, or safety reviewers
+- authorize autonomous deployment in critical systems
+
+It defines a controlled evaluation layer around uncertain outputs.
+
+---
+
+## Canonical Flow
 
 ```text
-Input Signals
-   ↓
+Input Signal
+  ↓
+Structured Input Artifact
+  ↓
 Decision Contract
-   ↓
+  ↓
 Knowledge Block Constraints
-   ↓
+  ↓
+Evaluator Policy
+  ↓
 Deterministic Evaluation
-   ↓
-Authorization Layer
-   ↓
+  ↓
+Authorization Decision
+  ↓
 Execution Receipt
-   ↓
+  ↓
 Audit Record
 ```
 
 ---
 
-## What This Repo Demonstrates
-
-This repository explores how to:
-
-- apply explicit constraints to probabilistic inputs
-- evaluate uncertain outputs against deterministic rules
-- produce consistent PASS / FAIL / ESCALATE decisions
-- validate execution conditions before action
-- generate receipted, hash-linked audit records
-
----
-
-## Runtime Governance Upgrade
-
-The repository now includes a stronger contract-based evaluation model:
-
-- **Decision Contract**: Defines what is being evaluated and which constraints apply
-- **Evaluator Policy**: Defines allowed decisions, thresholds, failure behavior, and review rules
-- **Quantum Output Schema**: Provides a structured representation of probabilistic outputs
-- **Execution Receipt**: Records what was evaluated, which rule was applied, and what decision was produced
-
-The key governance rule is:
-
-> Inputs are uncertain. Evaluation rules are explicit. Outcomes are receipted.
-
----
-
 ## Quick Start
 
-Run the reference example:
+Run the reference evaluator from the repository root:
 
 ```bash
 python reference-implementation/python/evaluate_decision_contract.py
 ```
 
-This will:
+This evaluates the default Bell-state PASS example.
 
-- read a sample quantum probability distribution
-- apply a deterministic decision contract
-- produce a deterministic outcome
-- generate a hash-linked execution receipt
+Run the FAIL example:
+
+```bash
+python reference-implementation/python/evaluate_decision_contract.py \
+  --output use-cases/quantum/examples/bell-state-output-fail.json
+```
+
+The evaluator loads:
+
+```text
+use-cases/quantum/examples/bell-state-output-pass.json
+use-cases/quantum/examples/bell-state-correlation-contract.json
+use-cases/quantum/examples/evaluator-policy-basic.json
+```
+
+and emits a structured execution receipt.
 
 ---
 
-## Use Cases
+## Reference Quantum Example
 
-### Quantum Output Evaluation
-
-Quantum systems produce probabilistic output distributions.
-
-Using Knowledge Blocks, those outputs can be evaluated against defined constraints to produce:
-
-- deterministic downstream decisions
-- repeatable evaluation logic
-- auditable execution paths
-
-Important:
-
-> This does not make quantum systems deterministic.  
-> It makes decisions about quantum outputs structured and verifiable.
-
-Example:
+A probabilistic output may look like:
 
 ```text
-Quantum Output:
 00 = 0.48
 01 = 0.02
 10 = 0.01
 11 = 0.49
+```
 
-Rule:
+A deterministic Decision Contract may define:
+
+```text
 Accept if P(00) + P(11) >= 0.95
+```
 
-Outcome:
+The evaluator computes:
+
+```text
+0.48 + 0.49 = 0.97
+```
+
+Result:
+
+```text
 PASS
 ```
 
-### Malnutrition and Humanitarian Risk Modeling
+The source remains probabilistic. The evaluation rule is deterministic.
 
-Malnutrition is a complex, multi-variable humanitarian challenge.
+---
 
-This repository does not attempt to solve malnutrition.
+## Core Concepts
 
-Instead, it demonstrates how Knowledge Blocks may help structure:
+### Decision Contract
 
-- risk signals
-- intervention triggers
-- review thresholds
-- auditable recommendations
+Defines what is being evaluated, which fields are in scope, what threshold applies, and which decision should be produced on pass or fail.
 
-All humanitarian and medical outputs require validation by qualified professionals.
+### Evaluator Policy
+
+Defines allowed decisions, receipt requirements, failure behavior, review conditions, and audit behavior.
+
+### Deterministic Outcome
+
+A structured PASS / FAIL / ESCALATE result produced by applying explicit rules to a structured input artifact.
+
+### Execution Receipt
+
+A record of what was evaluated, which contract and policy applied, what decision was produced, and which hashes support replay or audit.
+
+### Knowledge Block
+
+A governed decision unit that binds inputs, constraints, contracts, runtime rules, and verification requirements into a reusable evaluation structure.
 
 ---
 
 ## Repository Structure
 
 ```text
-docs/                         Concepts, architecture, and evaluation notes
-schema/                       JSON Schema specifications
-use-cases/quantum/            Quantum examples and decision contracts
-use-cases/malnutrition/       Humanitarian examples
-reference-implementation/     Minimal Python evaluation logic
-assets/                       Diagrams and visuals
+.github/workflows/                  Validation workflows
+docs/                               Architecture and governance documentation
+schema/                             JSON Schema specifications
+use-cases/quantum/examples/         Quantum decision-contract examples
+reference-implementation/python/    Minimal Python evaluator
+assets/                             Diagrams and visuals
 ```
 
 ---
@@ -172,12 +174,34 @@ schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
 
 docs/deterministic-evaluation.md
-docs/quantum-decision-contract.md
+docs/decision-contracts.md
 docs/replay-and-receipts.md
+docs/canonical-flow.md
 
 use-cases/quantum/examples/bell-state-correlation-contract.json
+use-cases/quantum/examples/evaluator-policy-basic.json
 use-cases/quantum/examples/bell-state-output-pass.json
+use-cases/quantum/examples/bell-state-output-fail.json
 use-cases/quantum/examples/bell-state-receipt-pass.json
+use-cases/quantum/examples/bell-state-receipt-fail.json
+
+reference-implementation/python/evaluate_decision_contract.py
+```
+
+---
+
+## Validation
+
+This repository includes a GitHub Actions workflow that:
+
+- validates all JSON files parse correctly
+- runs the reference evaluator against the PASS example
+- runs the reference evaluator against the FAIL example
+
+Workflow:
+
+```text
+.github/workflows/validate-json.yml
 ```
 
 ---
@@ -202,14 +226,14 @@ without expert validation, independent review, and operational oversight.
 
 This project supports the broader AIPA mission of building:
 
-- ethical AI systems
 - deterministic decision frameworks
 - auditable computational pipelines
-- runtime governance patterns
+- governed AI systems
+- runtime verification patterns
 - transparent decision infrastructure
 
 ---
 
 ## License
 
-Apache 2.0
+Apache License 2.0
