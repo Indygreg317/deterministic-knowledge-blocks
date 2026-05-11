@@ -58,3 +58,9 @@ jobs:
         run: |
           python reference-implementation/python/evaluate_decision_contract.py \
             --output use-cases/quantum/examples/bell-state-output-fail.json
+
+      - name: Replay verification against stored PASS receipt
+        run: |
+          python reference-implementation/python/replay_receipt.py \
+            --output use-cases/quantum/examples/bell-state-output-pass.json \
+            --receipt use-cases/quantum/examples/bell-state-receipt-pass.json
