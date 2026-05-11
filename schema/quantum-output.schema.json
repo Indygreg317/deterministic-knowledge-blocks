@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/quantum-output.schema.json",
+  "title": "Quantum Output",
+  "description": "Structured representation of a probabilistic quantum output distribution before deterministic downstream evaluation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["output_id", "source", "shots", "distribution"],
+  "properties": {
+    "output_id": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["system_type"],
+      "properties": {
+        "system_type": { "type": "string", "enum": ["simulator", "hardware", "unknown"] },
+        "provider": { "type": "string" },
+        "backend": { "type": "string" },
+        "circuit_id": { "type": "string" }
+      }
+    },
+    "shots": { "type": "integer", "minimum": 1 },
+    "distribution": {
+      "type": "object",
+      "description": "Map of measured bitstring states to probabilities.",
+      "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 },
+      "minProperties": 1
+    },
+    "metadata": { "type": "object" }
+  }
+}
