@@ -1,14 +1,49 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Knowledge Block",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/knowledge-block.schema.json",
+  "title": "Deterministic Knowledge Block",
+  "description": "A governed knowledge unit for applying explicit constraints to uncertain inputs and producing auditable deterministic downstream decisions.",
   "type": "object",
-  "required": ["block_id", "inputs", "constraints", "logic"],
+  "additionalProperties": false,
+  "required": [
+    "block_id",
+    "block_version",
+    "purpose",
+    "inputs",
+    "constraints",
+    "decision_contract",
+    "evaluator_policy",
+    "verification"
+  ],
   "properties": {
     "block_id": { "type": "string" },
+    "block_version": { "type": "string" },
+    "purpose": { "type": "string" },
     "description": { "type": "string" },
     "inputs": { "type": "object" },
     "constraints": { "type": "object" },
-    "logic": { "type": "string" },
-    "verification": { "type": "object" }
+    "decision_contract": { "type": "string" },
+    "evaluator_policy": { "type": "string" },
+    "allowed_decisions": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["PASS", "FAIL", "ESCALATE"] },
+      "uniqueItems": true
+    },
+    "runtime": {
+      "type": "object",
+      "properties": {
+        "deterministic_evaluator": { "type": "string" },
+        "authorization_required": { "type": "boolean" },
+        "receipt_required": { "type": "boolean" }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "hash_inputs": { "type": "boolean" },
+        "hash_outputs": { "type": "boolean" },
+        "audit_record_required": { "type": "boolean" }
+      }
+    }
   }
 }
