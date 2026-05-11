@@ -1,0 +1,14 @@
+{
+  "receipt_id": "receipt-fail-001",
+  "timestamp": "2026-05-10T18:05:00Z",
+  "status": "FAIL",
+  "rule_version": "0.1.0",
+  "input_hash": "sha256:bellstatefailhash",
+  "evaluator": "reference-deterministic-evaluator",
+  "contract_id": "bell-state-correlation-contract",
+  "policy_id": "basic-deterministic-policy",
+  "evaluated_fields": ["00", "11"],
+  "computed_value": 0.60,
+  "threshold": 0.95,
+  "decision_reason": "Combined probability of correlated Bell states did not satisfy deterministic threshold."
+}
