@@ -1,11 +1,49 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/deterministic-outcome.schema.json",
   "title": "Deterministic Outcome",
+  "description": "Structured deterministic evaluation result produced from explicit rules applied to uncertain or probabilistic inputs.",
   "type": "object",
-  "required": ["decision", "computed_value"],
+  "additionalProperties": false,
+  "required": [
+    "decision",
+    "computed_value",
+    "threshold",
+    "rule_id",
+    "contract_id"
+  ],
   "properties": {
-    "decision": { "type": "string" },
-    "computed_value": { "type": ["number", "string", "object"] },
-    "reason": { "type": "string" }
+    "decision": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "ESCALATE"]
+    },
+    "computed_value": {
+      "type": ["number", "string", "object"]
+    },
+    "threshold": {
+      "type": "number"
+    },
+    "operator": {
+      "type": "string"
+    },
+    "rule_id": {
+      "type": "string"
+    },
+    "contract_id": {
+      "type": "string"
+    },
+    "policy_id": {
+      "type": "string"
+    },
+    "evaluated_fields": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "reason": {
+      "type": "string"
+    },
+    "receipt_required": {
+      "type": "boolean"
+    }
   }
 }
