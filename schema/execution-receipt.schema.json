@@ -1,14 +1,66 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/execution-receipt.schema.json",
   "title": "Execution Receipt",
+  "description": "Receipted evidence of deterministic evaluation execution, including hashes, policy references, and downstream decision outcomes.",
   "type": "object",
-  "required": ["receipt_id", "timestamp", "status"],
+  "additionalProperties": false,
+  "required": [
+    "receipt_id",
+    "timestamp",
+    "status",
+    "contract_id",
+    "policy_id",
+    "input_hash",
+    "evaluator"
+  ],
   "properties": {
-    "receipt_id": { "type": "string" },
-    "timestamp": { "type": "string", "format": "date-time" },
-    "status": { "type": "string" },
-    "rule_version": { "type": "string" },
-    "input_hash": { "type": "string" },
-    "evaluator": { "type": "string" }
+    "receipt_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "ESCALATE"]
+    },
+    "rule_version": {
+      "type": "string"
+    },
+    "contract_id": {
+      "type": "string"
+    },
+    "policy_id": {
+      "type": "string"
+    },
+    "input_hash": {
+      "type": "string"
+    },
+    "output_hash": {
+      "type": "string"
+    },
+    "evaluator": {
+      "type": "string"
+    },
+    "evaluated_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "computed_value": {
+      "type": "number"
+    },
+    "threshold": {
+      "type": "number"
+    },
+    "decision_reason": {
+      "type": "string"
+    },
+    "audit_metadata": {
+      "type": "object"
+    }
   }
 }
