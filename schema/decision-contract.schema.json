@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/decision-contract.schema.json",
+  "title": "Decision Contract",
+  "description": "Defines deterministic evaluation constraints applied to uncertain or probabilistic inputs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_id",
+    "contract_version",
+    "domain",
+    "evaluation_target",
+    "rules",
+    "allowed_decisions"
+  ],
+  "properties": {
+    "contract_id": { "type": "string" },
+    "contract_version": { "type": "string" },
+    "domain": { "type": "string" },
+    "description": { "type": "string" },
+    "evaluation_target": {
+      "type": "object",
+      "required": ["operator", "threshold"],
+      "properties": {
+        "operator": {
+          "type": "string",
+          "enum": [">", ">=", "<", "<=", "==", "sum_gte", "sum_lte"]
+        },
+        "threshold": { "type": "number" },
+        "fields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["rule_id", "decision_on_pass", "decision_on_fail"],
+        "properties": {
+          "rule_id": { "type": "string" },
+          "decision_on_pass": { "type": "string", "enum": ["PASS", "FAIL", "ESCALATE"] },
+          "decision_on_fail": { "type": "string", "enum": ["PASS", "FAIL", "ESCALATE"] }
+        }
+      }
+    },
+    "allowed_decisions": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["PASS", "FAIL", "ESCALATE"] }
+    }
+  }
+}
