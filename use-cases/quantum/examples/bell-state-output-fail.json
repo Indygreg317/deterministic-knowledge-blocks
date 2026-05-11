@@ -1,0 +1,19 @@
+{
+  "output_id": "bell-state-output-fail-001",
+  "source": {
+    "system_type": "simulator",
+    "provider": "reference-example",
+    "backend": "bell-state-simulator",
+    "circuit_id": "bell-state-correlation"
+  },
+  "shots": 1000,
+  "distribution": {
+    "00": 0.31,
+    "01": 0.19,
+    "10": 0.21,
+    "11": 0.29
+  },
+  "metadata": {
+    "description": "Bell state correlation output expected to FAIL deterministic evaluation."
+  }
+}
