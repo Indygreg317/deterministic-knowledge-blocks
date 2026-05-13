@@ -19,6 +19,15 @@ docs/reviewer-handoff-index.md
 
 The handoff index explains what to inspect first, what commands to run, what each artifact proves, and what remains outside the verification boundary.
 
+Additional orientation documents:
+
+```text
+docs/project-status.md
+docs/glossary.md
+docs/examples-index.md
+docs/roadmap.md
+```
+
 ---
 
 ## What This Repository Is
@@ -289,6 +298,10 @@ schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
 
 docs/reviewer-handoff-index.md
+docs/project-status.md
+docs/glossary.md
+docs/examples-index.md
+docs/roadmap.md
 docs/deterministic-evaluation.md
 docs/decision-contracts.md
 docs/replay-and-receipts.md
@@ -368,6 +381,12 @@ It should not be used for:
 - autonomous execution
 
 without expert validation, independent review, and operational oversight.
+
+For current maturity and review framing, see:
+
+```text
+docs/project-status.md
+```
 
 ---
 
