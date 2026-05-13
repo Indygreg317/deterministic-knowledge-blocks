@@ -1,0 +1,10 @@
+{
+  "values": {
+    "11": 0.49,
+    "00": 0.48
+  },
+  "status": "PASS",
+  "policy_id": "basic-deterministic-policy",
+  "contract_id": "bell-state-correlation-contract",
+  "artifact_id": "canonical-example-001"
+}
