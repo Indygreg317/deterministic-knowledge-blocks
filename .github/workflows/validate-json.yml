@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library, governance-boundary-map]
+    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library, governance-boundary-map, minimal-audit-package]
   pull_request:
     branches: [main]
 
@@ -39,6 +39,40 @@ jobs:
               raise SystemExit(1)
 
           print('All JSON files parsed successfully.')
+          PY
+
+      - name: Validate audit package manifest
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('audit-packages/bell-state-minimal/audit-package-manifest.json')
+          manifest = json.loads(path.read_text(encoding='utf-8'))
+
+          required = ['audit_package_id', 'audit_package_version', 'purpose', 'package_scope', 'artifacts', 'verification_summary', 'review_boundaries']
+          missing = [field for field in required if field not in manifest]
+          if missing:
+              raise SystemExit(f'Missing audit package manifest fields: {missing}')
+
+          required_artifacts = [artifact for artifact in manifest['artifacts'] if artifact.get('required_for_review')]
+          if len(required_artifacts) < 6:
+              raise SystemExit('Expected at least six required review artifacts.')
+
+          missing_paths = []
+          for artifact in required_artifacts:
+              artifact_path = Path(artifact['path'])
+              if not artifact_path.exists():
+                  missing_paths.append(str(artifact_path))
+
+          if missing_paths:
+              raise SystemExit(f'Missing required audit package artifact paths: {missing_paths}')
+
+          summary = manifest['verification_summary']
+          if summary.get('expected_verification_status') != 'VALID_RECEIPT':
+              raise SystemExit('Expected audit package verification status to be VALID_RECEIPT.')
+
+          print('Audit package manifest validated.')
           PY
 
       - name: Validate governance boundary map structure
