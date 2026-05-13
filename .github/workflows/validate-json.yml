@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library]
+    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library, governance-boundary-map]
   pull_request:
     branches: [main]
 
@@ -39,6 +39,39 @@ jobs:
               raise SystemExit(1)
 
           print('All JSON files parsed successfully.')
+          PY
+
+      - name: Validate governance boundary map structure
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('use-cases/quantum/examples/bell-state-governance-boundary-map.json')
+          boundary_map = json.loads(path.read_text(encoding='utf-8'))
+
+          required = ['boundary_map_id', 'boundary_map_version', 'scope', 'artifacts', 'boundaries', 'verification_outcomes']
+          missing = [field for field in required if field not in boundary_map]
+          if missing:
+              raise SystemExit(f'Missing boundary map fields: {missing}')
+
+          artifact_types = {artifact['artifact_type'] for artifact in boundary_map['artifacts']}
+          expected_types = {
+              'structured_input_artifact',
+              'decision_contract',
+              'evaluator_policy',
+              'execution_receipt',
+              'verification_report',
+          }
+          if artifact_types != expected_types:
+              raise SystemExit(f'Unexpected artifact types: {artifact_types}')
+
+          outcomes = set(boundary_map['verification_outcomes'])
+          expected_outcomes = {'VALID_RECEIPT', 'INVALID_RECEIPT', 'UNSUPPORTED_RECEIPT'}
+          if outcomes != expected_outcomes:
+              raise SystemExit(f'Unexpected verification outcomes: {outcomes}')
+
+          print('Governance boundary map structure validated.')
           PY
 
       - name: Run canonical hashing regression checks
