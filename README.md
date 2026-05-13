@@ -20,6 +20,7 @@ It demonstrates how to:
 - apply governed Evaluator Policies
 - produce PASS / FAIL / ESCALATE decisions
 - generate hash-linked Execution Receipts
+- verify receipts against replayed deterministic outcomes
 - preserve auditability and replay boundaries
 
 The initial working use case is quantum output evaluation, where probabilistic distributions are evaluated through deterministic downstream rules.
@@ -59,6 +60,8 @@ Authorization Decision
   ↓
 Execution Receipt
   ↓
+Receipt Verification
+  ↓
 Audit Record
 ```
 
@@ -81,7 +84,22 @@ python reference-implementation/python/evaluate_decision_contract.py \
   --output use-cases/quantum/examples/bell-state-output-fail.json
 ```
 
-The evaluator loads:
+Verify the baseline PASS receipt:
+
+```bash
+python reference-implementation/python/verify_receipt.py \
+  --receipt use-cases/quantum/examples/bell-state-receipt-pass.json
+```
+
+Verify a known tamper case:
+
+```bash
+python reference-implementation/python/verify_receipt.py \
+  --receipt use-cases/quantum/examples/bell-state-receipt-tampered-status.json \
+  --expect INVALID_RECEIPT
+```
+
+The evaluator and verifier load:
 
 ```text
 use-cases/quantum/examples/bell-state-output-pass.json
@@ -89,7 +107,7 @@ use-cases/quantum/examples/bell-state-correlation-contract.json
 use-cases/quantum/examples/evaluator-policy-basic.json
 ```
 
-and emits a structured execution receipt.
+and emit structured execution and verification evidence.
 
 ---
 
@@ -144,9 +162,13 @@ A structured PASS / FAIL / ESCALATE result produced by applying explicit rules t
 
 A record of what was evaluated, which contract and policy applied, what decision was produced, and which hashes support replay or audit.
 
+### Receipt Verification
+
+A deterministic replay check that compares the receipt against preserved artifacts, canonical hashes, and the recomputed outcome.
+
 ### Knowledge Block
 
-A governed decision unit that binds inputs, constraints, contracts, runtime rules, and verification requirements into a reusable evaluation structure.
+A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, and verification requirements into a reusable evaluation structure.
 
 ---
 
@@ -157,7 +179,7 @@ A governed decision unit that binds inputs, constraints, contracts, runtime rule
 docs/                               Architecture and governance documentation
 schema/                             JSON Schema specifications
 use-cases/quantum/examples/         Quantum decision-contract examples
-reference-implementation/python/    Minimal Python evaluator
+reference-implementation/python/    Minimal Python evaluator and verifier
 assets/                             Diagrams and visuals
 ```
 
@@ -176,6 +198,7 @@ schema/evaluator-policy.schema.json
 docs/deterministic-evaluation.md
 docs/decision-contracts.md
 docs/replay-and-receipts.md
+docs/receipt-verification.md
 docs/canonical-flow.md
 
 use-cases/quantum/examples/bell-state-correlation-contract.json
@@ -184,8 +207,10 @@ use-cases/quantum/examples/bell-state-output-pass.json
 use-cases/quantum/examples/bell-state-output-fail.json
 use-cases/quantum/examples/bell-state-receipt-pass.json
 use-cases/quantum/examples/bell-state-receipt-fail.json
+use-cases/quantum/examples/bell-state-receipt-tampered-status.json
 
 reference-implementation/python/evaluate_decision_contract.py
+reference-implementation/python/verify_receipt.py
 ```
 
 ---
@@ -197,6 +222,8 @@ This repository includes a GitHub Actions workflow that:
 - validates all JSON files parse correctly
 - runs the reference evaluator against the PASS example
 - runs the reference evaluator against the FAIL example
+- verifies the valid receipt example
+- verifies that the tampered receipt example fails verification
 
 Workflow:
 
