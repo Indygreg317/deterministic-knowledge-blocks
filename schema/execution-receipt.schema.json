@@ -12,6 +12,8 @@
     "contract_id",
     "policy_id",
     "input_hash",
+    "contract_hash",
+    "policy_hash",
     "evaluator"
   ],
   "properties": {
@@ -36,6 +38,12 @@
       "type": "string"
     },
     "input_hash": {
+      "type": "string"
+    },
+    "contract_hash": {
+      "type": "string"
+    },
+    "policy_hash": {
       "type": "string"
     },
     "output_hash": {
