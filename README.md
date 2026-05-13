@@ -24,6 +24,7 @@ It demonstrates how to:
 - produce Verification Reports as first-class evidence artifacts
 - define canonical hashing rules for stable artifact identity
 - demonstrate failure modes with executable negative tests
+- map governance declarations against independently verifiable evidence boundaries
 - preserve auditability and replay boundaries
 
 The initial working use case is quantum output evaluation, where probabilistic distributions are evaluated through deterministic downstream rules.
@@ -68,6 +69,8 @@ Execution Receipt
 Receipt Verification
   ↓
 Verification Report
+  ↓
+Governance Boundary Map
   ↓
 Audit Record
 ```
@@ -117,6 +120,12 @@ Save a Verification Report artifact:
 python reference-implementation/python/verify_receipt.py \
   --receipt use-cases/quantum/examples/bell-state-receipt-pass.json \
   --save-report use-cases/quantum/examples/generated-verification-report.json
+```
+
+Review the Governance Boundary Map example:
+
+```text
+use-cases/quantum/examples/bell-state-governance-boundary-map.json
 ```
 
 Verify a known tamper case:
@@ -214,9 +223,13 @@ A structured evidence artifact that records what receipt was checked, which arti
 
 Executable negative examples that show how receipt verification detects tampered thresholds, stale hashes, missing input evidence, wrong evaluator identity, and unsupported contract logic.
 
+### Governance Boundary Map
+
+A structured map that separates what artifacts declare from what preserved evidence and deterministic verification can actually test.
+
 ### Knowledge Block
 
-A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, and verification requirements into a reusable evaluation structure.
+A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, governance boundary maps, and verification requirements into a reusable evaluation structure.
 
 ---
 
@@ -243,6 +256,7 @@ schema/knowledge-block.schema.json
 schema/deterministic-outcome.schema.json
 schema/execution-receipt.schema.json
 schema/verification-report.schema.json
+schema/governance-boundary-map.schema.json
 schema/decision-contract.schema.json
 schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
@@ -253,6 +267,7 @@ docs/replay-and-receipts.md
 docs/receipt-verification.md
 docs/verification-reports.md
 docs/failure-mode-library.md
+docs/governance-boundary-map.md
 docs/canonical-hashing.md
 docs/canonical-flow.md
 
@@ -269,6 +284,7 @@ use-cases/quantum/examples/bell-state-receipt-fail.json
 use-cases/quantum/examples/bell-state-receipt-tampered-status.json
 use-cases/quantum/examples/bell-state-verification-report-pass.json
 use-cases/quantum/examples/bell-state-verification-report-tampered-status.json
+use-cases/quantum/examples/bell-state-governance-boundary-map.json
 use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json
 use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-contract-hash.json
 use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-policy-hash.json
@@ -289,6 +305,7 @@ reference-implementation/python/verify_receipt.py
 This repository includes a GitHub Actions workflow that:
 
 - validates all JSON files parse correctly
+- validates the governance boundary map structure
 - runs canonical hashing regression checks
 - runs the reference evaluator against the PASS example
 - runs the reference evaluator against the FAIL example
