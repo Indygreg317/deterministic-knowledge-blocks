@@ -1,0 +1,78 @@
+{
+  "audit_package_id": "bell-state-minimal-audit-package",
+  "audit_package_version": "0.1.0",
+  "purpose": "Minimal reviewer package for deterministic Bell-state evaluation, receipt verification, and governance boundary inspection.",
+  "package_scope": "Reference quantum-output evaluation example using preserved artifacts already stored in the repository.",
+  "artifacts": [
+    {
+      "artifact_type": "structured_input_artifact",
+      "path": "use-cases/quantum/examples/bell-state-output-pass.json",
+      "role": "Preserved probabilistic output submitted for deterministic downstream evaluation.",
+      "canonical_hash": "sha256:2ff966b52a5cc29e62e51d54bbe95fab579e39d5c13b5971d37952c109e2c119",
+      "required_for_review": true
+    },
+    {
+      "artifact_type": "decision_contract",
+      "path": "use-cases/quantum/examples/bell-state-correlation-contract.json",
+      "role": "Defines the deterministic rule, evaluated fields, threshold, and allowed decision outcomes.",
+      "canonical_hash": "sha256:9e47696e2ae29b42daed381d1217adf59885fb4110806039b3286070e847f011",
+      "required_for_review": true
+    },
+    {
+      "artifact_type": "evaluator_policy",
+      "path": "use-cases/quantum/examples/evaluator-policy-basic.json",
+      "role": "Defines allowed decisions, receipt requirements, review behavior, and audit behavior.",
+      "canonical_hash": "sha256:b533039aa375f790fbd74e42fc6f2965c52c47ea61fa42f286b9d44f21ff3df3",
+      "required_for_review": true
+    },
+    {
+      "artifact_type": "execution_receipt",
+      "path": "use-cases/quantum/examples/bell-state-receipt-pass.json",
+      "role": "Records the decision claimed by the deterministic evaluator.",
+      "required_for_review": true
+    },
+    {
+      "artifact_type": "verification_report",
+      "path": "use-cases/quantum/examples/bell-state-verification-report-pass.json",
+      "role": "Records the receipt verification result, checked artifacts, checked fields, recomputed decision, and mismatches.",
+      "required_for_review": true
+    },
+    {
+      "artifact_type": "governance_boundary_map",
+      "path": "use-cases/quantum/examples/bell-state-governance-boundary-map.json",
+      "role": "Separates declarations from independently verifiable evidence boundaries.",
+      "required_for_review": true
+    },
+    {
+      "artifact_type": "failure_mode_library",
+      "path": "use-cases/quantum/examples/failure-modes/",
+      "role": "Executable negative examples showing how invalid and unsupported receipts are detected.",
+      "required_for_review": false
+    }
+  ],
+  "verification_summary": {
+    "expected_receipt_status": "PASS",
+    "expected_verification_status": "VALID_RECEIPT",
+    "verifier": "reference-receipt-verifier",
+    "notes": [
+      "The receipt is expected to survive deterministic verification against the preserved input artifact, Decision Contract, and Evaluator Policy.",
+      "This package does not claim that the upstream source was deterministic, truthful, safe, or complete."
+    ]
+  },
+  "review_boundaries": [
+    "Reviewers can verify artifact identity using canonical hashes.",
+    "Reviewers can replay the deterministic evaluation using the reference evaluator.",
+    "Reviewers can verify the receipt using the reference verifier.",
+    "Reviewers can inspect the Governance Boundary Map to see what is declared, what is verifiable, and what is outside scope."
+  ],
+  "review_commands": [
+    "python reference-implementation/python/canonical_hash.py use-cases/quantum/examples/bell-state-output-pass.json",
+    "python reference-implementation/python/evaluate_decision_contract.py --output use-cases/quantum/examples/bell-state-output-pass.json",
+    "python reference-implementation/python/verify_receipt.py --receipt use-cases/quantum/examples/bell-state-receipt-pass.json --expect VALID_RECEIPT",
+    "python reference-implementation/python/verify_receipt.py --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json --expect INVALID_RECEIPT"
+  ],
+  "notes": [
+    "This manifest intentionally references existing repository artifacts instead of duplicating them.",
+    "The audit package is designed for review, demonstration, and reproducibility, not production certification."
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/audit-package-manifest.schema.json",
+  "title": "Audit Package Manifest",
+  "description": "A manifest that indexes the artifacts needed to review a deterministic Knowledge Block evaluation, receipt verification, and governance boundary map.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "audit_package_id",
+    "audit_package_version",
+    "purpose",
+    "package_scope",
+    "artifacts",
+    "verification_summary",
+    "review_boundaries"
+  ],
+  "properties": {
+    "audit_package_id": {"type": "string"},
+    "audit_package_version": {"type": "string"},
+    "purpose": {"type": "string"},
+    "package_scope": {"type": "string"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifact_type", "path", "role", "required_for_review"],
+        "properties": {
+          "artifact_type": {"type": "string"},
+          "path": {"type": "string"},
+          "role": {"type": "string"},
+          "canonical_hash": {"type": "string"},
+          "required_for_review": {"type": "boolean"}
+        }
+      }
+    },
+    "verification_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_receipt_status", "expected_verification_status", "verifier"],
+      "properties": {
+        "expected_receipt_status": {"type": "string"},
+        "expected_verification_status": {"type": "string"},
+        "verifier": {"type": "string"},
+        "notes": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "review_boundaries": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "review_commands": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}

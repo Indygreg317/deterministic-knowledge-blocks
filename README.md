@@ -25,6 +25,7 @@ It demonstrates how to:
 - define canonical hashing rules for stable artifact identity
 - demonstrate failure modes with executable negative tests
 - map governance declarations against independently verifiable evidence boundaries
+- package the evidence chain into reviewer-facing audit packages
 - preserve auditability and replay boundaries
 
 The initial working use case is quantum output evaluation, where probabilistic distributions are evaluated through deterministic downstream rules.
@@ -71,6 +72,8 @@ Receipt Verification
 Verification Report
   ↓
 Governance Boundary Map
+  ↓
+Audit Package
   ↓
 Audit Record
 ```
@@ -126,6 +129,12 @@ Review the Governance Boundary Map example:
 
 ```text
 use-cases/quantum/examples/bell-state-governance-boundary-map.json
+```
+
+Review the minimal audit package:
+
+```text
+audit-packages/bell-state-minimal/
 ```
 
 Verify a known tamper case:
@@ -227,9 +236,13 @@ Executable negative examples that show how receipt verification detects tampered
 
 A structured map that separates what artifacts declare from what preserved evidence and deterministic verification can actually test.
 
+### Audit Package
+
+A reviewer-facing manifest that indexes the artifacts, commands, verification summary, and review boundaries needed to inspect a deterministic evaluation chain.
+
 ### Knowledge Block
 
-A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, governance boundary maps, and verification requirements into a reusable evaluation structure.
+A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, governance boundary maps, audit packages, and verification requirements into a reusable evaluation structure.
 
 ---
 
@@ -237,6 +250,7 @@ A governed decision unit that binds inputs, constraints, contracts, runtime rule
 
 ```text
 .github/workflows/                  Validation workflows
+audit-packages/                     Reviewer-facing audit package manifests and guides
 docs/                               Architecture and governance documentation
 schema/                             JSON Schema specifications
 examples/canonicalization/          Canonical hashing examples
@@ -257,6 +271,7 @@ schema/deterministic-outcome.schema.json
 schema/execution-receipt.schema.json
 schema/verification-report.schema.json
 schema/governance-boundary-map.schema.json
+schema/audit-package-manifest.schema.json
 schema/decision-contract.schema.json
 schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
@@ -268,8 +283,12 @@ docs/receipt-verification.md
 docs/verification-reports.md
 docs/failure-mode-library.md
 docs/governance-boundary-map.md
+docs/audit-packages.md
 docs/canonical-hashing.md
 docs/canonical-flow.md
+
+audit-packages/bell-state-minimal/README.md
+audit-packages/bell-state-minimal/audit-package-manifest.json
 
 examples/canonicalization/artifact-a.json
 examples/canonicalization/artifact-b-reordered.json
@@ -305,6 +324,7 @@ reference-implementation/python/verify_receipt.py
 This repository includes a GitHub Actions workflow that:
 
 - validates all JSON files parse correctly
+- validates the audit package manifest
 - validates the governance boundary map structure
 - runs canonical hashing regression checks
 - runs the reference evaluator against the PASS example
