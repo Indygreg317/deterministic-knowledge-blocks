@@ -9,6 +9,18 @@ This repository provides a reference framework for converting structured uncerta
 
 ---
 
+## Reviewer Start Here
+
+For a fast review path, start with:
+
+```text
+docs/reviewer-handoff-index.md
+```
+
+The handoff index explains what to inspect first, what commands to run, what each artifact proves, and what remains outside the verification boundary.
+
+---
+
 ## What This Repository Is
 
 This repository is a reference architecture for deterministic evaluation around uncertain systems.
@@ -276,6 +288,7 @@ schema/decision-contract.schema.json
 schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
 
+docs/reviewer-handoff-index.md
 docs/deterministic-evaluation.md
 docs/decision-contracts.md
 docs/replay-and-receipts.md
