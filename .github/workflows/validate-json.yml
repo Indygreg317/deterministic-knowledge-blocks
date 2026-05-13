@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact]
+    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library]
   pull_request:
     branches: [main]
 
@@ -75,3 +75,30 @@ jobs:
             --save-report /tmp/bell-state-verification-report-pass.json
 
           test -s /tmp/bell-state-verification-report-pass.json
+
+      - name: Validate failure mode library
+        run: |
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json \
+            --expect INVALID_RECEIPT
+
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-contract-hash.json \
+            --expect INVALID_RECEIPT
+
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-policy-hash.json \
+            --expect INVALID_RECEIPT
+
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-missing-input-hash.json \
+            --expect INVALID_RECEIPT
+
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-wrong-evaluator.json \
+            --expect INVALID_RECEIPT
+
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/bell-state-receipt-pass.json \
+            --contract use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json \
+            --expect UNSUPPORTED_RECEIPT
