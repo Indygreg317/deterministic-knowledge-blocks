@@ -1,0 +1,26 @@
+{
+  "contract_id": "bell-state-unsupported-operator-contract",
+  "contract_version": "0.1.0",
+  "domain": "quantum-output-evaluation",
+  "description": "Unsupported contract example used to demonstrate UNSUPPORTED_RECEIPT behavior.",
+  "evaluation_target": {
+    "operator": "median_gte",
+    "threshold": 0.95,
+    "fields": [
+      "00",
+      "11"
+    ]
+  },
+  "rules": [
+    {
+      "rule_id": "unsupported-median-threshold",
+      "decision_on_pass": "PASS",
+      "decision_on_fail": "FAIL"
+    }
+  ],
+  "allowed_decisions": [
+    "PASS",
+    "FAIL",
+    "ESCALATE"
+  ]
+}
