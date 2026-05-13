@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification]
+    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact]
   pull_request:
     branches: [main]
 
@@ -66,3 +66,12 @@ jobs:
           python reference-implementation/python/verify_receipt.py \
             --receipt use-cases/quantum/examples/bell-state-receipt-tampered-status.json \
             --expect INVALID_RECEIPT
+
+      - name: Generate verification report artifact
+        run: |
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/bell-state-receipt-pass.json \
+            --expect VALID_RECEIPT \
+            --save-report /tmp/bell-state-verification-report-pass.json
+
+          test -s /tmp/bell-state-verification-report-pass.json
