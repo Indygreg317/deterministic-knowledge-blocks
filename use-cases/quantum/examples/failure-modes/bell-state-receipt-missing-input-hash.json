@@ -1,0 +1,19 @@
+{
+  "receipt_id": "receipt-bell-state-output-pass-001-missing-input-hash",
+  "timestamp": "2026-05-13T00:00:00Z",
+  "status": "PASS",
+  "rule_version": "0.1.0",
+  "contract_hash": "sha256:9e47696e2ae29b42daed381d1217adf59885fb4110806039b3286070e847f011",
+  "policy_hash": "sha256:b533039aa375f790fbd74e42fc6f2965c52c47ea61fa42f286b9d44f21ff3df3",
+  "evaluator": "reference-deterministic-evaluator",
+  "contract_id": "bell-state-correlation-contract",
+  "policy_id": "basic-deterministic-policy",
+  "evaluated_fields": [
+    "00",
+    "11"
+  ],
+  "computed_value": 0.97,
+  "threshold": 0.95,
+  "decision_reason": "Tampered receipt: required input hash was removed.",
+  "output_hash": "sha256:789698136ecd7f64778d87734151380da8ebd44c558aa9ba8ce8ae25aafe0e1d"
+}

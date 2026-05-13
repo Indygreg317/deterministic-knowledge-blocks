@@ -23,6 +23,7 @@ It demonstrates how to:
 - verify receipts against replayed deterministic outcomes
 - produce Verification Reports as first-class evidence artifacts
 - define canonical hashing rules for stable artifact identity
+- demonstrate failure modes with executable negative tests
 - preserve auditability and replay boundaries
 
 The initial working use case is quantum output evaluation, where probabilistic distributions are evaluated through deterministic downstream rules.
@@ -126,6 +127,14 @@ python reference-implementation/python/verify_receipt.py \
   --expect INVALID_RECEIPT
 ```
 
+Run a failure-mode example:
+
+```bash
+python reference-implementation/python/verify_receipt.py \
+  --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json \
+  --expect INVALID_RECEIPT
+```
+
 The evaluator and verifier load:
 
 ```text
@@ -201,6 +210,10 @@ A deterministic replay check that compares the receipt against preserved artifac
 
 A structured evidence artifact that records what receipt was checked, which artifacts and fields were compared, what decision was recomputed, and which mismatches were found.
 
+### Failure Mode Library
+
+Executable negative examples that show how receipt verification detects tampered thresholds, stale hashes, missing input evidence, wrong evaluator identity, and unsupported contract logic.
+
 ### Knowledge Block
 
 A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, and verification requirements into a reusable evaluation structure.
@@ -215,6 +228,8 @@ docs/                               Architecture and governance documentation
 schema/                             JSON Schema specifications
 examples/canonicalization/          Canonical hashing examples
 use-cases/quantum/examples/         Quantum decision-contract examples
+use-cases/quantum/examples/failure-modes/
+                                    Executable failure-mode examples
 reference-implementation/python/    Minimal Python evaluator, verifier, and hashing utilities
 assets/                             Diagrams and visuals
 ```
@@ -237,6 +252,7 @@ docs/decision-contracts.md
 docs/replay-and-receipts.md
 docs/receipt-verification.md
 docs/verification-reports.md
+docs/failure-mode-library.md
 docs/canonical-hashing.md
 docs/canonical-flow.md
 
@@ -253,6 +269,12 @@ use-cases/quantum/examples/bell-state-receipt-fail.json
 use-cases/quantum/examples/bell-state-receipt-tampered-status.json
 use-cases/quantum/examples/bell-state-verification-report-pass.json
 use-cases/quantum/examples/bell-state-verification-report-tampered-status.json
+use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json
+use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-contract-hash.json
+use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-policy-hash.json
+use-cases/quantum/examples/failure-modes/bell-state-receipt-missing-input-hash.json
+use-cases/quantum/examples/failure-modes/bell-state-receipt-wrong-evaluator.json
+use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json
 
 reference-implementation/python/canonical_hash.py
 reference-implementation/python/test_canonical_hashing.py
@@ -273,6 +295,7 @@ This repository includes a GitHub Actions workflow that:
 - verifies the valid receipt example
 - verifies that the tampered receipt example fails verification
 - generates a Verification Report artifact
+- validates the failure-mode library
 
 Workflow:
 
