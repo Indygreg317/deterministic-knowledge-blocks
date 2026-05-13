@@ -1,0 +1,137 @@
+{
+  "boundary_map_id": "bell-state-governance-boundary-map",
+  "boundary_map_version": "0.1.0",
+  "scope": "Bell-state deterministic evaluation receipt verification example.",
+  "artifacts": [
+    {
+      "artifact_type": "structured_input_artifact",
+      "artifact_role": "Preserved probabilistic output submitted for deterministic downstream evaluation.",
+      "declares": [
+        "Observed or simulated output distribution",
+        "Source metadata",
+        "Shot count"
+      ],
+      "verifiable_claims": [
+        "Artifact content matches declared input hash",
+        "Referenced distribution fields are available to the evaluator"
+      ],
+      "non_verifiable_claims": [
+        "The upstream source system was deterministic",
+        "The upstream source system was truthful or complete"
+      ]
+    },
+    {
+      "artifact_type": "decision_contract",
+      "artifact_role": "Defines deterministic evaluation rule and allowed downstream decisions.",
+      "declares": [
+        "Evaluation target fields",
+        "Operator",
+        "Threshold",
+        "Decision on pass",
+        "Decision on fail"
+      ],
+      "verifiable_claims": [
+        "Contract content matches declared contract hash",
+        "Referenced rule can be replayed by the verifier if the operator is supported"
+      ],
+      "non_verifiable_claims": [
+        "The contract is domain-sufficient for all real-world use",
+        "The threshold is scientifically or commercially optimal"
+      ]
+    },
+    {
+      "artifact_type": "evaluator_policy",
+      "artifact_role": "Defines receipt, audit, and failure behavior for the deterministic evaluator.",
+      "declares": [
+        "Allowed decisions",
+        "Receipt requirements",
+        "Review conditions",
+        "Failure behavior",
+        "Audit behavior"
+      ],
+      "verifiable_claims": [
+        "Policy content matches declared policy hash",
+        "Receipt-required behavior is visible in the preserved receipt artifact"
+      ],
+      "non_verifiable_claims": [
+        "The policy satisfies all external regulatory requirements"
+      ]
+    },
+    {
+      "artifact_type": "execution_receipt",
+      "artifact_role": "Records the decision claimed by the deterministic evaluator.",
+      "declares": [
+        "Receipt identifier",
+        "Status",
+        "Referenced input hash",
+        "Referenced contract hash",
+        "Referenced policy hash",
+        "Computed value",
+        "Threshold",
+        "Evaluator identity"
+      ],
+      "verifiable_claims": [
+        "Receipt fields match preserved artifacts",
+        "Receipt status matches recomputed deterministic decision",
+        "Receipt output hash matches receipt content when present"
+      ],
+      "non_verifiable_claims": [
+        "The upstream source generated the input honestly",
+        "The decision is safe for production deployment"
+      ]
+    },
+    {
+      "artifact_type": "verification_report",
+      "artifact_role": "Records whether the receipt survived deterministic verification.",
+      "declares": [
+        "Verification status",
+        "Checked artifacts",
+        "Checked fields",
+        "Recomputed decision",
+        "Mismatches",
+        "Verifier identity"
+      ],
+      "verifiable_claims": [
+        "Report content can be canonically hashed",
+        "Report identifies the checked receipt and artifacts",
+        "Report records PASS/FAIL/UNSUPPORTED style verification evidence"
+      ],
+      "non_verifiable_claims": [
+        "The verifier is the only possible valid verifier",
+        "No other external review is required"
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "boundary_id": "input-to-contract-evaluation",
+      "from_artifact": "structured_input_artifact",
+      "to_artifact": "decision_contract",
+      "handoff_claim": "The preserved input artifact contains the fields required by the decision contract.",
+      "verification_method": "Canonical hash comparison and deterministic field lookup."
+    },
+    {
+      "boundary_id": "contract-policy-to-receipt",
+      "from_artifact": "decision_contract + evaluator_policy",
+      "to_artifact": "execution_receipt",
+      "handoff_claim": "The receipt was produced under the referenced contract and policy.",
+      "verification_method": "Recompute deterministic outcome and compare receipt fields, artifact hashes, threshold, computed value, and evaluator identity."
+    },
+    {
+      "boundary_id": "receipt-to-verification-report",
+      "from_artifact": "execution_receipt",
+      "to_artifact": "verification_report",
+      "handoff_claim": "The receipt was checked against preserved artifacts and replayed deterministic evidence.",
+      "verification_method": "Generate structured Verification Report with checked artifacts, checked fields, mismatches, recomputed decision, and report hash."
+    }
+  ],
+  "verification_outcomes": [
+    "VALID_RECEIPT",
+    "INVALID_RECEIPT",
+    "UNSUPPORTED_RECEIPT"
+  ],
+  "notes": [
+    "Governance artifacts declare claims. Verification artifacts test only claims supported by preserved evidence and deterministic replay.",
+    "A valid receipt does not prove that the upstream source was deterministic, truthful, safe, or complete."
+  ]
+}
