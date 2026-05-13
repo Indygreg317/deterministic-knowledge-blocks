@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library, governance-boundary-map, minimal-audit-package, reviewer-handoff]
+    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library, governance-boundary-map, minimal-audit-package, reviewer-handoff, public-readiness-batch]
   pull_request:
     branches: [main]
 
@@ -25,6 +25,17 @@ jobs:
           grep -q "Five-Minute Review Path" docs/reviewer-handoff-index.md
           grep -q "What To Run" docs/reviewer-handoff-index.md
           grep -q "Core Boundary Statement" docs/reviewer-handoff-index.md
+
+      - name: Validate public readiness docs
+        run: |
+          test -s docs/project-status.md
+          test -s docs/glossary.md
+          test -s docs/examples-index.md
+          test -s docs/roadmap.md
+          grep -q "Current Status" docs/project-status.md
+          grep -q "Receipt Verification" docs/glossary.md
+          grep -q "Primary Bell-State Example" docs/examples-index.md
+          grep -q "Near-Term Priorities" docs/roadmap.md
 
       - name: Validate JSON files
         run: |
