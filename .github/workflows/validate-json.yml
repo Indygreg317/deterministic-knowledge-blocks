@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline]
+    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification]
   pull_request:
     branches: [main]
 
@@ -40,6 +40,10 @@ jobs:
 
           print('All JSON files parsed successfully.')
           PY
+
+      - name: Run canonical hashing regression checks
+        run: |
+          python reference-implementation/python/test_canonical_hashing.py
 
       - name: Run reference evaluator against PASS example
         run: |
