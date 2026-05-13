@@ -66,6 +66,8 @@ def build_receipt(output: Dict[str, Any], contract: Dict[str, Any], policy: Dict
         "status": result["decision"],
         "rule_version": contract["contract_version"],
         "input_hash": canonical_hash(output),
+        "contract_hash": canonical_hash(contract),
+        "policy_hash": canonical_hash(policy),
         "evaluator": "reference-deterministic-evaluator",
         "contract_id": contract["contract_id"],
         "policy_id": policy["policy_id"],
