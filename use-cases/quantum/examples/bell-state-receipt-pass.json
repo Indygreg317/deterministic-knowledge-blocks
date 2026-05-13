@@ -1,14 +1,20 @@
 {
-  "receipt_id": "receipt-pass-001",
-  "timestamp": "2026-05-10T18:00:00Z",
+  "receipt_id": "receipt-bell-state-output-pass-001",
+  "timestamp": "2026-05-13T00:00:00Z",
   "status": "PASS",
   "rule_version": "0.1.0",
-  "input_hash": "sha256:bellstatepasshash",
+  "input_hash": "sha256:2ff966b52a5cc29e62e51d54bbe95fab579e39d5c13b5971d37952c109e2c119",
+  "contract_hash": "sha256:9e47696e2ae29b42daed381d1217adf59885fb4110806039b3286070e847f011",
+  "policy_hash": "sha256:b533039aa375f790fbd74e42fc6f2965c52c47ea61fa42f286b9d44f21ff3df3",
   "evaluator": "reference-deterministic-evaluator",
   "contract_id": "bell-state-correlation-contract",
   "policy_id": "basic-deterministic-policy",
-  "evaluated_fields": ["00", "11"],
+  "evaluated_fields": [
+    "00",
+    "11"
+  ],
   "computed_value": 0.97,
   "threshold": 0.95,
-  "decision_reason": "Combined probability of correlated Bell states exceeded deterministic threshold."
+  "decision_reason": "Deterministic threshold satisfied.",
+  "output_hash": "sha256:789698136ecd7f64778d87734151380da8ebd44c558aa9ba8ce8ae25aafe0e1d"
 }
