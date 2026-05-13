@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass]
+    branches: [main, repo-completion-pass, receipt-verification-baseline]
   pull_request:
     branches: [main]
 
@@ -50,3 +50,15 @@ jobs:
         run: |
           python reference-implementation/python/evaluate_decision_contract.py \
             --output use-cases/quantum/examples/bell-state-output-fail.json
+
+      - name: Verify valid receipt example
+        run: |
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/bell-state-receipt-pass.json \
+            --expect VALID_RECEIPT
+
+      - name: Verify tampered receipt example fails verification
+        run: |
+          python reference-implementation/python/verify_receipt.py \
+            --receipt use-cases/quantum/examples/bell-state-receipt-tampered-status.json \
+            --expect INVALID_RECEIPT
