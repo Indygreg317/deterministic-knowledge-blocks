@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/governance-boundary-map.schema.json",
+  "title": "Governance Boundary Map",
+  "description": "A structured map separating governance declarations from independently verifiable evidence boundaries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "boundary_map_id",
+    "boundary_map_version",
+    "scope",
+    "artifacts",
+    "boundaries",
+    "verification_outcomes"
+  ],
+  "properties": {
+    "boundary_map_id": {"type": "string"},
+    "boundary_map_version": {"type": "string"},
+    "scope": {"type": "string"},
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["artifact_type", "artifact_role", "declares", "verifiable_claims"],
+        "properties": {
+          "artifact_type": {"type": "string"},
+          "artifact_role": {"type": "string"},
+          "declares": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "verifiable_claims": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "non_verifiable_claims": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    "boundaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["boundary_id", "from_artifact", "to_artifact", "handoff_claim", "verification_method"],
+        "properties": {
+          "boundary_id": {"type": "string"},
+          "from_artifact": {"type": "string"},
+          "to_artifact": {"type": "string"},
+          "handoff_claim": {"type": "string"},
+          "verification_method": {"type": "string"}
+        }
+      }
+    },
+    "verification_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["PASS", "FAIL", "ESCALATE", "VALID_RECEIPT", "INVALID_RECEIPT", "UNSUPPORTED_RECEIPT"]
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
