@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/verification-report.schema.json",
+  "title": "Verification Report",
+  "description": "Structured evidence produced when an execution receipt is checked against preserved artifacts and a recomputed deterministic outcome.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "verification_id",
+    "timestamp",
+    "verification_status",
+    "receipt_id",
+    "verifier",
+    "checked_artifacts",
+    "checked_fields",
+    "mismatches"
+  ],
+  "properties": {
+    "verification_id": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["VALID_RECEIPT", "INVALID_RECEIPT", "UNSUPPORTED_RECEIPT"]
+    },
+    "receipt_id": {
+      "type": ["string", "null"]
+    },
+    "contract_id": {
+      "type": ["string", "null"]
+    },
+    "policy_id": {
+      "type": ["string", "null"]
+    },
+    "recomputed_decision": {
+      "type": ["string", "null"]
+    },
+    "verifier": {
+      "type": "string"
+    },
+    "checked_artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt_hash", "input_hash", "contract_hash", "policy_hash"],
+      "properties": {
+        "receipt_hash": {"type": "string"},
+        "input_hash": {"type": "string"},
+        "contract_hash": {"type": "string"},
+        "policy_hash": {"type": "string"}
+      }
+    },
+    "checked_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mismatches": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "report_hash": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

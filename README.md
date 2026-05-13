@@ -21,6 +21,7 @@ It demonstrates how to:
 - produce PASS / FAIL / ESCALATE decisions
 - generate hash-linked Execution Receipts
 - verify receipts against replayed deterministic outcomes
+- produce Verification Reports as first-class evidence artifacts
 - define canonical hashing rules for stable artifact identity
 - preserve auditability and replay boundaries
 
@@ -65,6 +66,8 @@ Execution Receipt
   ↓
 Receipt Verification
   ↓
+Verification Report
+  ↓
 Audit Record
 ```
 
@@ -105,6 +108,14 @@ Verify the baseline PASS receipt:
 ```bash
 python reference-implementation/python/verify_receipt.py \
   --receipt use-cases/quantum/examples/bell-state-receipt-pass.json
+```
+
+Save a Verification Report artifact:
+
+```bash
+python reference-implementation/python/verify_receipt.py \
+  --receipt use-cases/quantum/examples/bell-state-receipt-pass.json \
+  --save-report use-cases/quantum/examples/generated-verification-report.json
 ```
 
 Verify a known tamper case:
@@ -186,9 +197,13 @@ A record of what was evaluated, which contract and policy applied, what decision
 
 A deterministic replay check that compares the receipt against preserved artifacts, canonical hashes, and the recomputed outcome.
 
+### Verification Report
+
+A structured evidence artifact that records what receipt was checked, which artifacts and fields were compared, what decision was recomputed, and which mismatches were found.
+
 ### Knowledge Block
 
-A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, and verification requirements into a reusable evaluation structure.
+A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, and verification requirements into a reusable evaluation structure.
 
 ---
 
@@ -212,6 +227,7 @@ assets/                             Diagrams and visuals
 schema/knowledge-block.schema.json
 schema/deterministic-outcome.schema.json
 schema/execution-receipt.schema.json
+schema/verification-report.schema.json
 schema/decision-contract.schema.json
 schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
@@ -220,6 +236,7 @@ docs/deterministic-evaluation.md
 docs/decision-contracts.md
 docs/replay-and-receipts.md
 docs/receipt-verification.md
+docs/verification-reports.md
 docs/canonical-hashing.md
 docs/canonical-flow.md
 
@@ -234,6 +251,8 @@ use-cases/quantum/examples/bell-state-output-fail.json
 use-cases/quantum/examples/bell-state-receipt-pass.json
 use-cases/quantum/examples/bell-state-receipt-fail.json
 use-cases/quantum/examples/bell-state-receipt-tampered-status.json
+use-cases/quantum/examples/bell-state-verification-report-pass.json
+use-cases/quantum/examples/bell-state-verification-report-tampered-status.json
 
 reference-implementation/python/canonical_hash.py
 reference-implementation/python/test_canonical_hashing.py
@@ -253,6 +272,7 @@ This repository includes a GitHub Actions workflow that:
 - runs the reference evaluator against the FAIL example
 - verifies the valid receipt example
 - verifies that the tampered receipt example fails verification
+- generates a Verification Report artifact
 
 Workflow:
 
