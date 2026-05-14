@@ -1,0 +1,156 @@
+{
+  "artifact_case_results": [
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-correlation-contract.json",
+      "artifact_type": "decision_contract",
+      "case_expectation": "expected_valid",
+      "case_id": "decision-contract-bell-state",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/decision-contract.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/evaluator-policy-basic.json",
+      "artifact_type": "evaluator_policy",
+      "case_expectation": "expected_valid",
+      "case_id": "evaluator-policy-basic",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/evaluator-policy.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-output-pass.json",
+      "artifact_type": "structured_input_artifact",
+      "case_expectation": "expected_valid",
+      "case_id": "quantum-output-pass",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/quantum-output.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-output-fail.json",
+      "artifact_type": "structured_input_artifact",
+      "case_expectation": "expected_valid",
+      "case_id": "quantum-output-fail",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/quantum-output.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-receipt-pass.json",
+      "artifact_type": "execution_receipt",
+      "case_expectation": "expected_valid",
+      "case_id": "execution-receipt-pass",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/execution-receipt.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-receipt-tampered-status.json",
+      "artifact_type": "execution_receipt",
+      "case_expectation": "expected_valid",
+      "case_id": "execution-receipt-tampered-status",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/execution-receipt.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-verification-report-pass.json",
+      "artifact_type": "verification_report",
+      "case_expectation": "expected_valid",
+      "case_id": "verification-report-pass",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/verification-report.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-verification-report-tampered-status.json",
+      "artifact_type": "verification_report",
+      "case_expectation": "expected_valid",
+      "case_id": "verification-report-tampered-status",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/verification-report.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/bell-state-governance-boundary-map.json",
+      "artifact_type": "governance_boundary_map",
+      "case_expectation": "expected_valid",
+      "case_id": "governance-boundary-map-bell-state",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/governance-boundary-map.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "audit-packages/bell-state-minimal/audit-package-manifest.json",
+      "artifact_type": "audit_package_manifest",
+      "case_expectation": "expected_valid",
+      "case_id": "audit-package-bell-state-minimal",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/audit-package-manifest.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "validation/reports/schema-validation-report.json",
+      "artifact_type": "schema_validation_report",
+      "case_expectation": "expected_valid",
+      "case_id": "schema-validation-report-example",
+      "errors": [],
+      "expected_failure_reason": null,
+      "schema_path": "schema/schema-validation-report.schema.json",
+      "status": "PASS"
+    },
+    {
+      "artifact_path": "use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json",
+      "artifact_type": "decision_contract",
+      "case_expectation": "expected_invalid",
+      "case_id": "unsupported-operator-contract",
+      "errors": [
+        "$.operator: expected one of ['sum_gte'], found 'median_gte'"
+      ],
+      "expected_failure_reason": "unsupported operator should fail current Decision Contract schema because median_gte is outside the allowed operator enum",
+      "schema_path": "schema/decision-contract.schema.json",
+      "status": "PASS"
+    }
+  ],
+  "failures": [],
+  "manifest_checks": [
+    {
+      "check_id": "manifest_schema_validation",
+      "notes": [],
+      "status": "PASS"
+    },
+    {
+      "check_id": "manifest_path_consistency",
+      "notes": [],
+      "status": "PASS"
+    }
+  ],
+  "manifest_path": "validation/artifact-validation-manifest.json",
+  "manifest_schema_path": "schema/artifact-validation-manifest.schema.json",
+  "notes": [
+    "Schema validation checks artifact shape and manifest consistency.",
+    "Schema validation does not prove upstream truth, scientific correctness, regulatory sufficiency, or total system safety.",
+    "This persisted report is a reviewer-facing example artifact for the current validation manifest."
+  ],
+  "report_id": "schema-validation-report",
+  "report_version": "0.1.0",
+  "status": "VALIDATION_PASSED",
+  "summary": {
+    "expected_invalid_artifact_cases_failed_as_expected": 1,
+    "expected_valid_artifact_cases_passed": 11,
+    "manifest_checks_passed": 2,
+    "total_artifact_cases_checked": 12,
+    "total_validation_checks_passed": 14
+  }
+}

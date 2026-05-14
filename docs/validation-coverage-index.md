@@ -56,6 +56,7 @@ This proves the validation manifest is not only reviewable JSON. It is schema-bo
 | verification-report-tampered-status | verification_report | `schema/verification-report.schema.json` | `use-cases/quantum/examples/bell-state-verification-report-tampered-status.json` | valid shape |
 | governance-boundary-map-bell-state | governance_boundary_map | `schema/governance-boundary-map.schema.json` | `use-cases/quantum/examples/bell-state-governance-boundary-map.json` | valid |
 | audit-package-bell-state-minimal | audit_package_manifest | `schema/audit-package-manifest.schema.json` | `audit-packages/bell-state-minimal/audit-package-manifest.json` | valid |
+| schema-validation-report-example | schema_validation_report | `schema/schema-validation-report.schema.json` | `validation/reports/schema-validation-report.json` | valid |
 
 ## Expected-Invalid Coverage
 
@@ -86,9 +87,10 @@ Receipt verification checks artifact truth against preserved evidence and determ
 
 ```text
 Manifest self-validation: 1
-Expected-valid artifact cases: 10
+Manifest path consistency: 1
+Expected-valid artifact cases: 11
 Expected-invalid schema cases: 1
-Total declared validation checks: 12
+Total declared validation checks: 14
 ```
 
 ## Known Boundaries
@@ -113,7 +115,6 @@ The declared validation manifest and listed artifacts are checked against declar
 Future validation coverage may include:
 
 - external verifier handoff manifests
-- schema-validation reports
 - expanded audit package types
 - additional domain examples
 - artifact type registry conformance
