@@ -4,7 +4,7 @@
 
 Deterministic governance requires reviewable evidence, not just claims.
 
-This index helps readers locate the artifacts that support verification, replay, receipt inspection, evaluator behavior, governance boundary review, and audit-package inspection.
+This index helps readers locate the artifacts that support verification, replay, receipt inspection, evaluator behavior, governance boundary review, validation coverage, and audit-package inspection.
 
 It is intentionally conservative. If a category is not present in the repository, it is marked as `Planned` rather than treated as existing evidence.
 
@@ -21,8 +21,10 @@ It is intentionally conservative. If a category is not present in the repository
 | FAIL examples | Show rejected deterministic evaluation outcomes. | `use-cases/quantum/examples/bell-state-output-fail.json`; `use-cases/quantum/examples/bell-state-receipt-fail.json` | Present | Demonstrates deterministic fail behavior. |
 | ESCALATE examples | Show review-required evaluator outcomes. | Planned | Planned | Outcome is supported conceptually in the repository language, but a dedicated executable example is not yet present. |
 | UNSUPPORTED examples | Show unsupported verification behavior. | `use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json` | Present | Used with the verifier to produce `UNSUPPORTED_RECEIPT`. |
-| Schema definitions | Define structured artifact expectations. | `schema/knowledge-block.schema.json`; `schema/deterministic-outcome.schema.json`; `schema/execution-receipt.schema.json`; `schema/verification-report.schema.json`; `schema/governance-boundary-map.schema.json`; `schema/audit-package-manifest.schema.json`; `schema/decision-contract.schema.json`; `schema/quantum-output.schema.json`; `schema/evaluator-policy.schema.json` | Present | Schemas make artifacts reviewable and machine-checkable. |
-| Test cases | Demonstrate executable verification behavior. | `reference-implementation/python/test_canonical_hashing.py`; `.github/workflows/validate-json.yml` | Present | CI and reference scripts provide baseline checks. |
+| Schema definitions | Define structured artifact expectations. | `schema/knowledge-block.schema.json`; `schema/deterministic-outcome.schema.json`; `schema/execution-receipt.schema.json`; `schema/verification-report.schema.json`; `schema/governance-boundary-map.schema.json`; `schema/audit-package-manifest.schema.json`; `schema/artifact-validation-manifest.schema.json`; `schema/decision-contract.schema.json`; `schema/quantum-output.schema.json`; `schema/evaluator-policy.schema.json` | Present | Schemas make artifacts reviewable and machine-checkable. |
+| Schema validation manifest | Declares which artifacts are checked against which schemas. | `validation/artifact-validation-manifest.json`; `docs/validation-manifest.md` | Present | Manifest is itself schema-validated before artifact cases are checked. |
+| Validation coverage index | Maps schema-validation cases to schemas, artifacts, expected outcomes, and reasons. | `docs/validation-coverage-index.md` | Present | Reviewer-facing coverage map for expected-valid and expected-invalid validation cases. |
+| Test cases | Demonstrate executable verification behavior. | `reference-implementation/python/test_canonical_hashing.py`; `reference-implementation/python/validate_artifact_schemas.py`; `.github/workflows/validate-json.yml` | Present | CI and reference scripts provide baseline checks. |
 | Governance record examples | Declare scope, authority, policy, or continuity assumptions. | Planned | Planned | Governance record artifacts are planned as a future layer. |
 | Verification boundary maps | Separate declarations from independently checkable evidence. | `schema/governance-boundary-map.schema.json`; `docs/governance-boundary-map.md`; `use-cases/quantum/examples/bell-state-governance-boundary-map.json` | Present | Prevents receipts and governance records from being overclaimed. |
 | Audit package examples | Bundle evidence into reviewer-facing inspection paths. | `schema/audit-package-manifest.schema.json`; `docs/audit-packages.md`; `audit-packages/bell-state-minimal/README.md`; `audit-packages/bell-state-minimal/audit-package-manifest.json` | Present | Minimal package indexes the current Bell-state evidence chain. |
@@ -50,6 +52,8 @@ Examples of valid evidence include:
 - a canonical hash example with stable reconstruction inputs
 - a replay example with an expected outcome
 - a verification report that records checked fields and mismatches
+- a validation manifest that declares expected-valid and expected-invalid schema checks
+- a validation coverage index that maps schema checks to artifacts and expected outcomes
 - a governance boundary map that separates declarations from verified claims
 
 ## What Does Not Count as Evidence
