@@ -1,0 +1,81 @@
+{
+  "manifest_id": "artifact-validation-manifest",
+  "manifest_version": "0.1.0",
+  "purpose": "Declare known artifact schema-validation cases for deterministic Knowledge Blocks.",
+  "valid_cases": [
+    {
+      "case_id": "decision-contract-bell-state",
+      "schema_path": "schema/decision-contract.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-correlation-contract.json",
+      "artifact_type": "decision_contract"
+    },
+    {
+      "case_id": "evaluator-policy-basic",
+      "schema_path": "schema/evaluator-policy.schema.json",
+      "artifact_path": "use-cases/quantum/examples/evaluator-policy-basic.json",
+      "artifact_type": "evaluator_policy"
+    },
+    {
+      "case_id": "quantum-output-pass",
+      "schema_path": "schema/quantum-output.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-output-pass.json",
+      "artifact_type": "structured_input_artifact"
+    },
+    {
+      "case_id": "quantum-output-fail",
+      "schema_path": "schema/quantum-output.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-output-fail.json",
+      "artifact_type": "structured_input_artifact"
+    },
+    {
+      "case_id": "execution-receipt-pass",
+      "schema_path": "schema/execution-receipt.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-receipt-pass.json",
+      "artifact_type": "execution_receipt"
+    },
+    {
+      "case_id": "execution-receipt-tampered-status",
+      "schema_path": "schema/execution-receipt.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-receipt-tampered-status.json",
+      "artifact_type": "execution_receipt"
+    },
+    {
+      "case_id": "verification-report-pass",
+      "schema_path": "schema/verification-report.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-verification-report-pass.json",
+      "artifact_type": "verification_report"
+    },
+    {
+      "case_id": "verification-report-tampered-status",
+      "schema_path": "schema/verification-report.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-verification-report-tampered-status.json",
+      "artifact_type": "verification_report"
+    },
+    {
+      "case_id": "governance-boundary-map-bell-state",
+      "schema_path": "schema/governance-boundary-map.schema.json",
+      "artifact_path": "use-cases/quantum/examples/bell-state-governance-boundary-map.json",
+      "artifact_type": "governance_boundary_map"
+    },
+    {
+      "case_id": "audit-package-bell-state-minimal",
+      "schema_path": "schema/audit-package-manifest.schema.json",
+      "artifact_path": "audit-packages/bell-state-minimal/audit-package-manifest.json",
+      "artifact_type": "audit_package_manifest"
+    }
+  ],
+  "expected_invalid_cases": [
+    {
+      "case_id": "unsupported-operator-contract",
+      "schema_path": "schema/decision-contract.schema.json",
+      "artifact_path": "use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json",
+      "artifact_type": "decision_contract",
+      "expected_failure_reason": "unsupported operator should fail current Decision Contract schema because median_gte is outside the allowed operator enum"
+    }
+  ],
+  "notes": [
+    "Validation cases are declared here so schema validation targets are reviewable evidence, not hidden Python constants.",
+    "Expected-invalid cases are intentional and should fail schema validation for the stated reason.",
+    "Schema validation checks artifact shape. It does not prove upstream truth, scientific correctness, regulatory sufficiency, or total system safety."
+  ]
+}
