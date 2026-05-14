@@ -71,9 +71,26 @@ The validator runs these checks in order:
 4. Every declared artifact_path exists and is a file
 5. Expected-valid artifacts validate against their declared schemas
 6. Expected-invalid artifacts fail validation for declared reasons
+7. Summary output reports total checks passed
 ```
 
 This prevents stale or broken manifest paths from being hidden until later validation steps.
+
+## Summary Output
+
+A successful validation run ends with a summary block:
+
+```text
+Validation summary
+------------------
+Manifest checks passed: 2
+Expected-valid artifact cases passed: 10
+Expected-invalid artifact cases failed as expected: 1
+Total artifact cases checked: 11
+Total validation checks passed: 13
+```
+
+This gives reviewers a compact count of what was checked without reading all individual case lines.
 
 ## Validated Artifacts
 
