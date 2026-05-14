@@ -16,6 +16,7 @@ For a fast review path, start with:
 - [Reviewer Handoff Index](docs/reviewer-handoff-index.md)
 - [Verification Documentation](docs/verification/README.md)
 - [Verification Evidence Index](docs/verification/evidence-index.md)
+- [Validation Coverage Index](docs/validation-coverage-index.md)
 
 The handoff index explains what to inspect first, what commands to run, what each artifact proves, and what remains outside the verification boundary.
 
@@ -53,6 +54,7 @@ It demonstrates how to:
 - demonstrate failure modes with executable negative tests
 - validate known artifacts against repository schemas using a declared validation manifest
 - validate the validation manifest against its own schema
+- map validation coverage across expected-valid and expected-invalid cases
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
 - preserve auditability and replay boundaries
@@ -145,11 +147,12 @@ Validate known artifacts against schemas:
 python reference-implementation/python/validate_artifact_schemas.py
 ```
 
-Review the declared validation manifest and its schema:
+Review the declared validation manifest, schema, and coverage index:
 
 ```text
 validation/artifact-validation-manifest.json
 schema/artifact-validation-manifest.schema.json
+docs/validation-coverage-index.md
 ```
 
 Verify the baseline PASS receipt:
@@ -262,6 +265,10 @@ A lightweight dependency-free check that validates known repository artifacts ag
 
 A reviewable manifest that declares which artifacts are validated against which schemas, including expected-valid and expected-invalid cases. The manifest itself is validated against `schema/artifact-validation-manifest.schema.json`.
 
+### Validation Coverage Index
+
+A reviewer-facing table that maps validation cases to artifact types, schemas, artifacts, expected results, and expected-invalid reasons.
+
 ### Deterministic Outcome
 
 A structured PASS / FAIL / ESCALATE result produced by applying explicit rules to a structured input artifact.
@@ -339,6 +346,7 @@ docs/verification/README.md
 docs/verification/evidence-index.md
 docs/schema-validation.md
 docs/validation-manifest.md
+docs/validation-coverage-index.md
 docs/deterministic-evaluation.md
 docs/decision-contracts.md
 docs/replay-and-receipts.md
