@@ -31,6 +31,12 @@ For details, see:
 docs/validation-manifest.md
 ```
 
+For a reviewer-facing coverage table, see:
+
+```text
+docs/validation-coverage-index.md
+```
+
 ## Validator
 
 Reference script:
@@ -50,6 +56,7 @@ It supports the subset of JSON Schema currently used by the repository:
 - `enum`
 - array `items`
 - nullable type lists such as `["string", "null"]`
+- local `$ref` entries into `#/$defs`
 
 It is not a complete JSON Schema implementation.
 
@@ -78,6 +85,25 @@ median_gte
 That operator is not currently allowed by the schema.
 
 This is intentional. The example exists to demonstrate `UNSUPPORTED_RECEIPT` behavior at the verifier boundary.
+
+## Schema Validity vs Verification Validity
+
+Some artifacts are expected to be schema-valid while still representing invalid verification outcomes.
+
+Example:
+
+```text
+use-cases/quantum/examples/bell-state-receipt-tampered-status.json
+```
+
+This artifact has a valid Execution Receipt shape, but it should fail receipt verification because its declared status does not match the recomputed deterministic decision.
+
+This distinction is important:
+
+```text
+Schema validation checks artifact shape.
+Receipt verification checks claims against preserved evidence and deterministic replay.
+```
 
 ## Boundary
 
