@@ -60,6 +60,21 @@ It supports the subset of JSON Schema currently used by the repository:
 
 It is not a complete JSON Schema implementation.
 
+## Validation Sequence
+
+The validator runs these checks in order:
+
+```text
+1. Manifest JSON parses
+2. Manifest validates against schema/artifact-validation-manifest.schema.json
+3. Every declared schema_path exists and is a file
+4. Every declared artifact_path exists and is a file
+5. Expected-valid artifacts validate against their declared schemas
+6. Expected-invalid artifacts fail validation for declared reasons
+```
+
+This prevents stale or broken manifest paths from being hidden until later validation steps.
+
 ## Validated Artifacts
 
 The current manifest includes validation cases for:
