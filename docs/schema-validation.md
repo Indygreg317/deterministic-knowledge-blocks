@@ -2,9 +2,34 @@
 
 ## Purpose
 
-This repository now includes lightweight artifact schema validation for known examples.
+This repository includes lightweight artifact schema validation for known examples.
 
 The goal is to harden CI so key artifacts are checked against their corresponding schemas, not merely parsed as valid JSON.
+
+## Validation Manifest
+
+Validation targets are declared in:
+
+```text
+validation/artifact-validation-manifest.json
+```
+
+The manifest defines:
+
+- expected-valid cases
+- expected-invalid cases
+- schema paths
+- artifact paths
+- artifact types
+- expected failure reasons
+
+This makes the validation scope reviewable without reading the validator implementation.
+
+For details, see:
+
+```text
+docs/validation-manifest.md
+```
 
 ## Validator
 
@@ -30,7 +55,7 @@ It is not a complete JSON Schema implementation.
 
 ## Validated Artifacts
 
-The current validation set includes:
+The current manifest includes validation cases for:
 
 - Decision Contract example
 - Evaluator Policy example
