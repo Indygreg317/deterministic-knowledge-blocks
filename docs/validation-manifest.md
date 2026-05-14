@@ -45,7 +45,7 @@ The manifest schema makes the manifest itself reviewable and enforceable.
 
 ## Manifest Self-Validation
 
-The validator now checks the manifest against:
+The validator checks the manifest against:
 
 ```text
 schema/artifact-validation-manifest.schema.json
@@ -57,6 +57,25 @@ This adds a governance layer:
 
 ```text
 validation manifest -> manifest schema -> artifact schema checks
+```
+
+## Manifest Path Consistency
+
+After manifest schema validation, the validator checks that every declared path exists and points to a file:
+
+```text
+schema_path
+artifact_path
+```
+
+A missing schema or artifact path fails validation before artifact schema checks run.
+
+This prevents stale manifest entries from silently remaining in the repository.
+
+Expected successful output includes:
+
+```text
+VALID MANIFEST PATHS: all declared schema_path and artifact_path entries exist
 ```
 
 ## Valid Cases
@@ -116,6 +135,7 @@ Expected first successful output includes:
 
 ```text
 VALID MANIFEST: validation/artifact-validation-manifest.json against schema/artifact-validation-manifest.schema.json
+VALID MANIFEST PATHS: all declared schema_path and artifact_path entries exist
 ```
 
 ## Governance Boundary
