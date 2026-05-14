@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/governance-record.schema.json",
+  "title": "Governance Record",
+  "description": "A declaration artifact that records governance context, assumptions, and links to evidence without independently proving those declarations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "governance_record_id",
+    "governance_record_version",
+    "purpose",
+    "scope",
+    "authority_context",
+    "policy_references",
+    "continuity_assumptions",
+    "linked_evidence",
+    "boundary_statement"
+  ],
+  "properties": {
+    "governance_record_id": {"type": "string"},
+    "governance_record_version": {"type": "string"},
+    "purpose": {"type": "string"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared_scope", "scope_boundary"],
+      "properties": {
+        "declared_scope": {"type": "string"},
+        "scope_boundary": {"type": "string"},
+        "out_of_scope": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "authority_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared_authority", "authority_mode"],
+      "properties": {
+        "declared_authority": {"type": "string"},
+        "authority_mode": {
+          "type": "string",
+          "enum": ["inherited", "declared", "override", "unknown"]
+        },
+        "authority_reference": {"type": "string"},
+        "notes": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "policy_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["policy_reference_id", "policy_reference_type", "declared_policy"],
+        "properties": {
+          "policy_reference_id": {"type": "string"},
+          "policy_reference_type": {"type": "string"},
+          "declared_policy": {"type": "string"},
+          "path": {"type": "string"},
+          "canonical_hash": {"type": "string"},
+          "notes": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    "continuity_assumptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assumption_id", "assumption_type", "declared_assumption", "verification_status"],
+        "properties": {
+          "assumption_id": {"type": "string"},
+          "assumption_type": {
+            "type": "string",
+            "enum": ["policy_continuity", "authority_continuity", "dependency_continuity", "temporal_validity", "receipt_linkage", "other"]
+          },
+          "declared_assumption": {"type": "string"},
+          "verification_status": {
+            "type": "string",
+            "enum": ["DECLARED_ONLY", "LINKED_EVIDENCE", "VERIFIED", "UNSUPPORTED"]
+          },
+          "linked_evidence_ids": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "notes": {
+            "type": "array",
+            "items": {"type": "string"}
+          }
+        }
+      }
+    },
+    "linked_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidence_id", "artifact_type", "path", "evidence_role"],
+        "properties": {
+          "evidence_id": {"type": "string"},
+          "artifact_type": {"type": "string"},
+          "path": {"type": "string"},
+          "evidence_role": {"type": "string"},
+          "canonical_hash": {"type": "string"},
+          "verification_status": {
+            "type": "string",
+            "enum": ["DECLARED_ONLY", "PATH_CONSISTENT", "SCHEMA_VALID", "VERIFIED", "UNSUPPORTED"]
+          },
+          "required_for_review": {"type": "boolean"}
+        }
+      }
+    },
+    "boundary_statement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declaration_boundary", "verification_boundary", "non_claims"],
+      "properties": {
+        "declaration_boundary": {"type": "string"},
+        "verification_boundary": {"type": "string"},
+        "non_claims": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "review_notes": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  }
+}
