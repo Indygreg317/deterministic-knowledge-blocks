@@ -59,6 +59,7 @@ It demonstrates how to:
 - verify that declared manifest paths point to existing files
 - summarize validation results for reviewer readability
 - emit Schema Validation Reports as machine-readable evidence artifacts
+- preserve a schema validation report example as a reviewable evidence artifact
 - map validation coverage across expected-valid and expected-invalid cases
 - catalog schemas and artifact type names for reviewer consistency
 - map governance declarations against independently verifiable evidence boundaries
@@ -162,10 +163,11 @@ python reference-implementation/python/validate_artifact_schemas.py \
 
 Successful validation ends with a compact summary of manifest checks, expected-valid cases, expected-invalid cases, artifact cases, and total checks.
 
-Review the declared validation manifest, schema, and coverage index:
+Review the declared validation manifest, schema, persisted report, and coverage index:
 
 ```text
 validation/artifact-validation-manifest.json
+validation/reports/schema-validation-report.json
 schema/artifact-validation-manifest.schema.json
 schema/schema-validation-report.schema.json
 docs/validation-coverage-index.md
@@ -287,7 +289,7 @@ A lightweight dependency-free check that validates known repository artifacts ag
 
 ### Schema Validation Report
 
-A machine-readable report emitted by schema validation that records manifest checks, artifact case results, expected-invalid behavior, summary counts, and failures if present.
+A machine-readable report emitted by schema validation that records manifest checks, artifact case results, expected-invalid behavior, summary counts, and failures if present. This repository includes a persisted example at `validation/reports/schema-validation-report.json`.
 
 ### Artifact Validation Manifest
 
@@ -346,7 +348,7 @@ A governed decision unit that binds inputs, constraints, contracts, runtime rule
 audit-packages/                     Reviewer-facing audit package manifests and guides
 docs/                               Architecture and governance documentation
 schema/                             JSON Schema specifications
-validation/                         Reviewable validation manifests
+validation/                         Reviewable validation manifests and reports
 examples/canonicalization/          Canonical hashing examples
 use-cases/quantum/examples/         Quantum decision-contract examples
 use-cases/quantum/examples/failure-modes/
@@ -373,6 +375,7 @@ schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
 
 validation/artifact-validation-manifest.json
+validation/reports/schema-validation-report.json
 
 docs/reviewer-handoff-index.md
 docs/project-status.md
@@ -439,6 +442,7 @@ This repository includes a GitHub Actions workflow that:
 - validates the artifact validation manifest against its schema
 - verifies declared schema and artifact paths exist
 - validates known artifacts against repository schemas using the artifact validation manifest
+- validates the persisted Schema Validation Report example
 - reports validation summary counts
 - generates a Schema Validation Report artifact
 - validates the audit package manifest
