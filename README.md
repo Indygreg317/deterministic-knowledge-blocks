@@ -64,6 +64,7 @@ It demonstrates how to:
 - catalog schemas and artifact type names for reviewer consistency
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
+- index schema validation report evidence inside audit packages
 - preserve auditability and replay boundaries
 
 The initial working use case is quantum output evaluation, where probabilistic distributions are evaluated through deterministic downstream rules.
@@ -98,6 +99,8 @@ Decision Contract
 Knowledge Block Constraints
   ↓
 Evaluator Policy
+  ↓
+Schema Validation Report
   ↓
 Deterministic Evaluation
   ↓
@@ -202,10 +205,11 @@ Review the Governance Boundary Map example:
 use-cases/quantum/examples/bell-state-governance-boundary-map.json
 ```
 
-Review the minimal audit package:
+Review the minimal audit package, including its schema validation report reference:
 
 ```text
 audit-packages/bell-state-minimal/
+validation/reports/schema-validation-report.json
 ```
 
 Verify a known tamper case:
@@ -289,7 +293,7 @@ A lightweight dependency-free check that validates known repository artifacts ag
 
 ### Schema Validation Report
 
-A machine-readable report emitted by schema validation that records manifest checks, artifact case results, expected-invalid behavior, summary counts, and failures if present. This repository includes a persisted example at `validation/reports/schema-validation-report.json`.
+A machine-readable report emitted by schema validation that records manifest checks, artifact case results, expected-invalid behavior, summary counts, and failures if present. This repository includes a persisted example at `validation/reports/schema-validation-report.json`, which is indexed by the Bell-state minimal audit package.
 
 ### Artifact Validation Manifest
 
@@ -333,7 +337,7 @@ A structured map that separates what artifacts declare from what preserved evide
 
 ### Audit Package
 
-A reviewer-facing manifest that indexes the artifacts, commands, verification summary, and review boundaries needed to inspect a deterministic evaluation chain.
+A reviewer-facing manifest that indexes the artifacts, commands, verification summary, and review boundaries needed to inspect a deterministic evaluation chain, including schema validation report evidence where applicable.
 
 ### Knowledge Block
 
