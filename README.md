@@ -61,6 +61,7 @@ It demonstrates how to:
 - emit Schema Validation Reports as machine-readable evidence artifacts
 - preserve a schema validation report example as a reviewable evidence artifact
 - map validation coverage across expected-valid and expected-invalid cases
+- document audit package CI coverage for reviewer inspection
 - catalog schemas and artifact type names for reviewer consistency
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
@@ -301,7 +302,7 @@ A reviewable manifest that declares which artifacts are validated against which 
 
 ### Validation Coverage Index
 
-A reviewer-facing table that maps validation cases to artifact types, schemas, artifacts, expected results, and expected-invalid reasons.
+A reviewer-facing table that maps validation cases to artifact types, schemas, artifacts, expected results, expected-invalid reasons, and audit package CI coverage.
 
 ### Schema Catalog
 
@@ -450,6 +451,7 @@ This repository includes a GitHub Actions workflow that:
 - reports validation summary counts
 - generates a Schema Validation Report artifact
 - validates the audit package manifest
+- verifies declared audit package artifact paths resolve
 - validates the governance boundary map structure
 - runs canonical hashing regression checks
 - runs the reference evaluator against the PASS example
