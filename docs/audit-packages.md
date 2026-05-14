@@ -17,6 +17,7 @@ Instead of duplicating every artifact, the manifest indexes existing repository 
 - Evaluator Policy
 - Execution Receipt
 - Verification Report
+- Schema Validation Report
 - Governance Boundary Map
 - optional failure-mode examples
 
@@ -40,6 +41,12 @@ Reviewer guide:
 audit-packages/bell-state-minimal/README.md
 ```
 
+The Bell-state minimal package now indexes the persisted schema validation report as audit-package evidence:
+
+```text
+validation/reports/schema-validation-report.json
+```
+
 ## Review Questions
 
 An audit package should help a reviewer answer:
@@ -51,6 +58,7 @@ What policy constrained the evaluator?
 What receipt was produced?
 Was the receipt verified?
 What verification report was produced?
+Were declared artifact shapes and validation outcomes checked?
 What claims remain outside the verification boundary?
 How can the reviewer replay or inspect the chain?
 ```
@@ -77,6 +85,12 @@ A valid audit package can support this claim:
 
 ```text
 The listed artifacts are sufficient to inspect and replay the deterministic verification path described by the package.
+```
+
+It can also support this narrower schema-validation claim when a schema validation report is indexed:
+
+```text
+The declared validation manifest and listed artifact cases were checked, and the results were recorded in a structured report.
 ```
 
 It does not automatically support this claim:
