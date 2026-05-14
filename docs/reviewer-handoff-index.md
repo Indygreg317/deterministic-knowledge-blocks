@@ -34,6 +34,12 @@ use-cases/quantum/examples/bell-state-verification-report-pass.json
 use-cases/quantum/examples/bell-state-governance-boundary-map.json
 ```
 
+Then review governance record framing:
+
+```text
+docs/governance-records.md
+```
+
 Then inspect failure behavior:
 
 ```text
@@ -59,6 +65,8 @@ Execution Receipt
 Receipt Verification
   ↓
 Verification Report
+  ↓
+Governance Record
   ↓
 Governance Boundary Map
   ↓
@@ -159,6 +167,14 @@ It can support reviewable evidence that the receipt was checked.
 
 It does not prove that no other verifier could disagree.
 
+### Governance Record
+
+Declares governance context such as scope, authority context, policy references, continuity assumptions, and links to evidence artifacts.
+
+It can make declarations and assumptions visible for review.
+
+It does not independently prove those declarations.
+
 ### Governance Boundary Map
 
 Shows what is declared, what is verifiable, and what remains outside scope.
@@ -200,6 +216,7 @@ UNSUPPORTED_RECEIPT
 ```text
 The source may remain probabilistic.
 The evaluation boundary is deterministic.
+The governance record declares context and assumptions.
 The receipt is evidence only if it survives verification.
 The verification report records what was checked.
 The governance boundary map prevents overclaiming.
@@ -216,7 +233,7 @@ A reviewer should ask:
 4. Can I recompute the deterministic decision?
 5. Can I verify the receipt?
 6. Can I see what fails when the receipt is tampered?
-7. Can I distinguish declarations from verified claims?
+7. Can I distinguish governance declarations from verified claims?
 8. Can I inspect the audit package without needing hidden context?
 
 ## Handoff Summary
