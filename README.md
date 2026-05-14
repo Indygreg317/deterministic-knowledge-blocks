@@ -17,6 +17,8 @@ For a fast review path, start with:
 - [Verification Documentation](docs/verification/README.md)
 - [Verification Evidence Index](docs/verification/evidence-index.md)
 - [Validation Coverage Index](docs/validation-coverage-index.md)
+- [Schema Catalog](docs/schema-catalog.md)
+- [Artifact Type Registry](docs/artifact-type-registry.md)
 
 The handoff index explains what to inspect first, what commands to run, what each artifact proves, and what remains outside the verification boundary.
 
@@ -55,6 +57,7 @@ It demonstrates how to:
 - validate known artifacts against repository schemas using a declared validation manifest
 - validate the validation manifest against its own schema
 - map validation coverage across expected-valid and expected-invalid cases
+- catalog schemas and artifact type names for reviewer consistency
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
 - preserve auditability and replay boundaries
@@ -153,6 +156,13 @@ Review the declared validation manifest, schema, and coverage index:
 validation/artifact-validation-manifest.json
 schema/artifact-validation-manifest.schema.json
 docs/validation-coverage-index.md
+```
+
+Review schema and artifact naming references:
+
+```text
+docs/schema-catalog.md
+docs/artifact-type-registry.md
 ```
 
 Verify the baseline PASS receipt:
@@ -269,6 +279,14 @@ A reviewable manifest that declares which artifacts are validated against which 
 
 A reviewer-facing table that maps validation cases to artifact types, schemas, artifacts, expected results, and expected-invalid reasons.
 
+### Schema Catalog
+
+A reviewer-facing catalog that lists repository schemas, what each schema governs, primary examples, and evidence roles.
+
+### Artifact Type Registry
+
+A terminology registry for artifact type names used across manifests, boundary maps, audit packages, validation coverage, and documentation.
+
 ### Deterministic Outcome
 
 A structured PASS / FAIL / ESCALATE result produced by applying explicit rules to a structured input artifact.
@@ -344,6 +362,8 @@ docs/examples-index.md
 docs/roadmap.md
 docs/verification/README.md
 docs/verification/evidence-index.md
+docs/schema-catalog.md
+docs/artifact-type-registry.md
 docs/schema-validation.md
 docs/validation-manifest.md
 docs/validation-coverage-index.md
