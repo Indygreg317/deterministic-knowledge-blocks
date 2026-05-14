@@ -19,7 +19,7 @@ When possible, new manifests and examples should reuse these artifact type names
 | `deterministic_outcome` | Structured output from deterministic evaluation. | `schema/deterministic-outcome.schema.json` | Reference evaluator output |
 | `execution_receipt` | Artifact recording the claimed deterministic decision and supporting references. | `schema/execution-receipt.schema.json` | `use-cases/quantum/examples/bell-state-receipt-pass.json` |
 | `verification_report` | Artifact recording receipt verification result, checked fields, checked artifacts, and mismatches. | `schema/verification-report.schema.json` | `use-cases/quantum/examples/bell-state-verification-report-pass.json` |
-| `governance_record` | Planned declaration artifact for scope, authority context, policy references, continuity assumptions, and links to evidence. | Planned | Planned |
+| `governance_record` | Declaration artifact for scope, authority context, policy references, continuity assumptions, boundary statements, and links to evidence. | `schema/governance-record.schema.json` | Planned |
 | `governance_boundary_map` | Artifact separating declarations from verifiable claims and out-of-scope claims. | `schema/governance-boundary-map.schema.json` | `use-cases/quantum/examples/bell-state-governance-boundary-map.json` |
 | `audit_package_manifest` | Artifact indexing reviewer-facing evidence package contents and review boundaries. | `schema/audit-package-manifest.schema.json` | `audit-packages/bell-state-minimal/audit-package-manifest.json` |
 | `artifact_validation_manifest` | Artifact declaring schema-validation cases and expected outcomes. | `schema/artifact-validation-manifest.schema.json` | `validation/artifact-validation-manifest.json` |
@@ -63,15 +63,15 @@ It does not mean the receipt is verified.
 
 A receipt becomes stronger evidence only when it survives receipt verification and is represented in a Verification Report.
 
-The same distinction will apply to future governance records:
+The same distinction applies to governance records:
 
 ```text
 artifact_type: governance_record
 ```
 
-would mean the artifact is intended to be interpreted as a governance record.
+means the artifact is intended to be interpreted as a governance record.
 
-It would not mean the declared scope, authority context, policy references, or continuity assumptions are independently proven.
+It does not mean the declared scope, authority context, policy references, continuity assumptions, or linked evidence are independently proven.
 
 ## Current Usage Locations
 
@@ -84,6 +84,7 @@ audit-packages/bell-state-minimal/audit-package-manifest.json
 docs/validation-coverage-index.md
 docs/schema-catalog.md
 docs/governance-records.md
+schema/governance-record.schema.json
 ```
 
 ## Extension Guidance
