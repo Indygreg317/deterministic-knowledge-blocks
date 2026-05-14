@@ -2,7 +2,7 @@ name: Validate JSON and Reference Evaluator
 
 on:
   push:
-    branches: [main, repo-completion-pass, receipt-verification-baseline, canonical-hashing-specification, verification-report-artifact, failure-mode-library, governance-boundary-map, minimal-audit-package, reviewer-handoff, public-readiness-batch]
+    branches: [main, schema-validation-hardening]
   pull_request:
     branches: [main]
 
@@ -58,6 +58,10 @@ jobs:
 
           print('All JSON files parsed successfully.')
           PY
+
+      - name: Validate artifacts against schemas
+        run: |
+          python reference-implementation/python/validate_artifact_schemas.py
 
       - name: Validate audit package manifest
         run: |
