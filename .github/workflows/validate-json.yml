@@ -83,24 +83,37 @@ jobs:
           if missing:
               raise SystemExit(f'Missing audit package manifest fields: {missing}')
 
-          required_artifacts = [artifact for artifact in manifest['artifacts'] if artifact.get('required_for_review')]
-          if len(required_artifacts) < 6:
-              raise SystemExit('Expected at least six required review artifacts.')
-
+          artifacts = manifest['artifacts']
+          required_artifact_fields = ['artifact_type', 'path', 'role', 'required_for_review']
+          missing_artifact_fields = []
           missing_paths = []
-          for artifact in required_artifacts:
+
+          for index, artifact in enumerate(artifacts):
+              artifact_label = artifact.get('artifact_type', f'artifacts[{index}]')
+              for field in required_artifact_fields:
+                  if field not in artifact:
+                      missing_artifact_fields.append(f'{artifact_label}: {field}')
+
               artifact_path = Path(artifact['path'])
               if not artifact_path.exists():
                   missing_paths.append(str(artifact_path))
 
+          if missing_artifact_fields:
+              raise SystemExit(f'Missing audit package artifact fields: {missing_artifact_fields}')
+
           if missing_paths:
-              raise SystemExit(f'Missing required audit package artifact paths: {missing_paths}')
+              raise SystemExit(f'Missing audit package artifact paths: {missing_paths}')
+
+          required_artifacts = [artifact for artifact in artifacts if artifact.get('required_for_review')]
+          if len(required_artifacts) < 7:
+              raise SystemExit('Expected at least seven required review artifacts, including schema validation report evidence.')
 
           summary = manifest['verification_summary']
           if summary.get('expected_verification_status') != 'VALID_RECEIPT':
               raise SystemExit('Expected audit package verification status to be VALID_RECEIPT.')
 
           print('Audit package manifest validated.')
+          print('Audit package paths validated.')
           PY
 
       - name: Validate governance boundary map structure
