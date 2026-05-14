@@ -17,9 +17,11 @@ It is intended for reviewers, contributors, partners, and external verifiers who
 | `schema/quantum-output.schema.json` | Quantum-output-style structured input artifacts | `use-cases/quantum/examples/bell-state-output-pass.json` | Defines preserved probabilistic input shape for the Bell-state example. |
 | `schema/execution-receipt.schema.json` | Execution Receipt artifacts | `use-cases/quantum/examples/bell-state-receipt-pass.json` | Defines claimed decision record and supporting artifact references. |
 | `schema/verification-report.schema.json` | Verification Report artifacts | `use-cases/quantum/examples/bell-state-verification-report-pass.json` | Defines verifier output, checked fields, checked artifacts, mismatches, and report hash. |
+| `schema/governance-record.schema.json` | Governance Record artifacts | Planned | Defines declaration artifact shape for scope, authority context, policy references, continuity assumptions, linked evidence, and boundary statements. |
 | `schema/governance-boundary-map.schema.json` | Governance Boundary Map artifacts | `use-cases/quantum/examples/bell-state-governance-boundary-map.json` | Separates declared claims from independently verifiable claims. |
 | `schema/audit-package-manifest.schema.json` | Audit Package manifests | `audit-packages/bell-state-minimal/audit-package-manifest.json` | Defines reviewer-facing bundle of evidence references and review boundaries. |
 | `schema/artifact-validation-manifest.schema.json` | Artifact Validation Manifest | `validation/artifact-validation-manifest.json` | Defines schema-validation coverage configuration. |
+| `schema/schema-validation-report.schema.json` | Schema Validation Report | `validation/reports/schema-validation-report.json` | Defines machine-readable schema validation result evidence. |
 
 ## Artifact Flow Coverage
 
@@ -39,6 +41,8 @@ Execution Receipt
 Receipt Verification
   ↓
 Verification Report
+  ↓
+Governance Record
   ↓
 Governance Boundary Map
   ↓
@@ -204,6 +208,32 @@ use-cases/quantum/examples/bell-state-verification-report-pass.json
 use-cases/quantum/examples/bell-state-verification-report-tampered-status.json
 ```
 
+### Governance Record Schema
+
+Path:
+
+```text
+schema/governance-record.schema.json
+```
+
+Role:
+
+```text
+Defines declaration artifact shape for governance context and linked evidence references.
+```
+
+Primary example:
+
+```text
+Planned
+```
+
+Important distinction:
+
+```text
+A governance record can be schema-valid while its declared authority, policy, continuity, or scope assumptions remain unverified.
+```
+
 ### Governance Boundary Map Schema
 
 Path:
@@ -264,6 +294,26 @@ Primary example:
 validation/artifact-validation-manifest.json
 ```
 
+### Schema Validation Report Schema
+
+Path:
+
+```text
+schema/schema-validation-report.schema.json
+```
+
+Role:
+
+```text
+Defines machine-readable schema validation result evidence.
+```
+
+Primary example:
+
+```text
+validation/reports/schema-validation-report.json
+```
+
 ## Validation Relationship
 
 Schema validation currently follows this path:
@@ -289,5 +339,7 @@ They do not prove:
 - regulatory sufficiency
 - total system safety
 - production readiness
+- legal compliance
+- certification
 
 Schemas make artifacts inspectable and machine-checkable. Verification, replay, review, and boundary mapping remain separate layers.

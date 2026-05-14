@@ -63,6 +63,7 @@ It demonstrates how to:
 - map validation coverage across expected-valid and expected-invalid cases
 - document audit package CI coverage for reviewer inspection
 - catalog schemas and artifact type names for reviewer consistency
+- define governance record shape for declaration artifacts
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
 - index schema validation report evidence inside audit packages
@@ -112,6 +113,8 @@ Execution Receipt
 Receipt Verification
   ↓
 Verification Report
+  ↓
+Governance Record
   ↓
 Governance Boundary Map
   ↓
@@ -183,6 +186,7 @@ Review schema and artifact naming references:
 ```text
 docs/schema-catalog.md
 docs/artifact-type-registry.md
+schema/governance-record.schema.json
 ```
 
 Verify the baseline PASS receipt:
@@ -332,6 +336,10 @@ A structured evidence artifact that records what receipt was checked, which arti
 
 Executable negative examples that show how receipt verification detects tampered thresholds, stale hashes, missing input evidence, wrong evaluator identity, and unsupported contract logic.
 
+### Governance Record
+
+A declaration artifact that records governance context, assumptions, and links to evidence without independently proving those declarations. Schema-valid governance record shape does not prove authority, policy correctness, continuity, compliance, certification, or production readiness.
+
 ### Governance Boundary Map
 
 A structured map that separates what artifacts declare from what preserved evidence and deterministic verification can actually test.
@@ -342,7 +350,7 @@ A reviewer-facing manifest that indexes the artifacts, commands, verification su
 
 ### Knowledge Block
 
-A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, governance boundary maps, audit packages, and verification requirements into a reusable evaluation structure.
+A governed decision unit that binds inputs, constraints, contracts, runtime rules, receipts, verification reports, governance records, governance boundary maps, audit packages, and verification requirements into a reusable evaluation structure.
 
 ---
 
@@ -371,6 +379,7 @@ schema/knowledge-block.schema.json
 schema/deterministic-outcome.schema.json
 schema/execution-receipt.schema.json
 schema/verification-report.schema.json
+schema/governance-record.schema.json
 schema/governance-boundary-map.schema.json
 schema/audit-package-manifest.schema.json
 schema/artifact-validation-manifest.schema.json
@@ -401,6 +410,7 @@ docs/replay-and-receipts.md
 docs/receipt-verification.md
 docs/verification-reports.md
 docs/failure-mode-library.md
+docs/governance-records.md
 docs/governance-boundary-map.md
 docs/audit-packages.md
 docs/canonical-hashing.md
