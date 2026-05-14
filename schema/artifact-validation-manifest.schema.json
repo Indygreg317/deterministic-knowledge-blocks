@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/artifact-validation-manifest.schema.json",
+  "title": "Artifact Validation Manifest",
+  "description": "Declares expected-valid and expected-invalid artifact schema-validation cases for deterministic Knowledge Blocks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_id",
+    "manifest_version",
+    "purpose",
+    "valid_cases",
+    "expected_invalid_cases"
+  ],
+  "properties": {
+    "manifest_id": {
+      "type": "string"
+    },
+    "manifest_version": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "valid_cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/validation_case"
+      }
+    },
+    "expected_invalid_cases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/expected_invalid_case"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "validation_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "schema_path",
+        "artifact_path",
+        "artifact_type"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string"
+        },
+        "schema_path": {
+          "type": "string"
+        },
+        "artifact_path": {
+          "type": "string"
+        },
+        "artifact_type": {
+          "type": "string"
+        }
+      }
+    },
+    "expected_invalid_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "schema_path",
+        "artifact_path",
+        "artifact_type",
+        "expected_failure_reason"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string"
+        },
+        "schema_path": {
+          "type": "string"
+        },
+        "artifact_path": {
+          "type": "string"
+        },
+        "artifact_type": {
+          "type": "string"
+        },
+        "expected_failure_reason": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
