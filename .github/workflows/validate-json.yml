@@ -64,7 +64,10 @@ jobs:
 
       - name: Validate artifacts against schemas
         run: |
-          python reference-implementation/python/validate_artifact_schemas.py
+          python reference-implementation/python/validate_artifact_schemas.py \
+            --save-report /tmp/schema-validation-report.json
+
+          test -s /tmp/schema-validation-report.json
 
       - name: Validate audit package manifest
         run: |
