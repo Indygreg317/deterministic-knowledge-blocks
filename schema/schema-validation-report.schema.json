@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aipa.network/schemas/deterministic-knowledge-blocks/schema-validation-report.schema.json",
+  "title": "Schema Validation Report",
+  "description": "Structured report emitted by the artifact schema validator after checking the validation manifest and declared artifact cases.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_id",
+    "report_version",
+    "status",
+    "manifest_path",
+    "manifest_schema_path",
+    "summary",
+    "manifest_checks",
+    "artifact_case_results"
+  ],
+  "properties": {
+    "report_id": {"type": "string"},
+    "report_version": {"type": "string"},
+    "status": {"type": "string", "enum": ["VALIDATION_PASSED", "VALIDATION_FAILED"]},
+    "manifest_path": {"type": "string"},
+    "manifest_schema_path": {"type": "string"},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_checks_passed",
+        "expected_valid_artifact_cases_passed",
+        "expected_invalid_artifact_cases_failed_as_expected",
+        "total_artifact_cases_checked",
+        "total_validation_checks_passed"
+      ],
+      "properties": {
+        "manifest_checks_passed": {"type": "integer"},
+        "expected_valid_artifact_cases_passed": {"type": "integer"},
+        "expected_invalid_artifact_cases_failed_as_expected": {"type": "integer"},
+        "total_artifact_cases_checked": {"type": "integer"},
+        "total_validation_checks_passed": {"type": "integer"}
+      }
+    },
+    "manifest_checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["check_id", "status"],
+        "properties": {
+          "check_id": {"type": "string"},
+          "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+          "notes": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "artifact_case_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "case_id",
+          "case_expectation",
+          "artifact_type",
+          "schema_path",
+          "artifact_path",
+          "status"
+        ],
+        "properties": {
+          "case_id": {"type": "string"},
+          "case_expectation": {"type": "string", "enum": ["expected_valid", "expected_invalid"]},
+          "artifact_type": {"type": "string"},
+          "schema_path": {"type": "string"},
+          "artifact_path": {"type": "string"},
+          "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+          "expected_failure_reason": {"type": ["string", "null"]},
+          "errors": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "failures": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
