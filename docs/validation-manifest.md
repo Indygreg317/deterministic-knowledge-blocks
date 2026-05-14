@@ -12,6 +12,12 @@ Manifest:
 validation/artifact-validation-manifest.json
 ```
 
+Manifest schema:
+
+```text
+schema/artifact-validation-manifest.schema.json
+```
+
 Validator:
 
 ```text
@@ -33,6 +39,24 @@ artifact type
 expected-valid cases
 expected-invalid cases
 expected failure reasons
+```
+
+The manifest schema makes the manifest itself reviewable and enforceable.
+
+## Manifest Self-Validation
+
+The validator now checks the manifest against:
+
+```text
+schema/artifact-validation-manifest.schema.json
+```
+
+before validating the listed artifact cases.
+
+This adds a governance layer:
+
+```text
+validation manifest -> manifest schema -> artifact schema checks
 ```
 
 ## Valid Cases
@@ -86,6 +110,12 @@ Run with an explicit manifest:
 ```bash
 python reference-implementation/python/validate_artifact_schemas.py \
   --manifest validation/artifact-validation-manifest.json
+```
+
+Expected first successful output includes:
+
+```text
+VALID MANIFEST: validation/artifact-validation-manifest.json against schema/artifact-validation-manifest.schema.json
 ```
 
 ## Governance Boundary
