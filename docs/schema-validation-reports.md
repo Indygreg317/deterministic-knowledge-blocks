@@ -21,6 +21,26 @@ It records:
 schema/schema-validation-report.schema.json
 ```
 
+## Persisted Example Report
+
+This repository includes a persisted example report:
+
+```text
+validation/reports/schema-validation-report.json
+```
+
+The persisted report is declared in:
+
+```text
+validation/artifact-validation-manifest.json
+```
+
+and validated against:
+
+```text
+schema/schema-validation-report.schema.json
+```
+
 ## Validator Command
 
 Generate a report from the repository root:
@@ -72,6 +92,16 @@ total_validation_checks_passed
 ```
 
 These match the human-readable console summary.
+
+For the persisted report example, the current summary is:
+
+```text
+manifest_checks_passed: 2
+expected_valid_artifact_cases_passed: 11
+expected_invalid_artifact_cases_failed_as_expected: 1
+total_artifact_cases_checked: 12
+total_validation_checks_passed: 14
+```
 
 ## Evidence Value
 
