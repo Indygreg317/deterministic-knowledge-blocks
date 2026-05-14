@@ -132,6 +132,32 @@ def validate_manifest_against_schema(manifest: Dict[str, Any]) -> List[str]:
     return validate(schema, manifest)
 
 
+def validate_manifest_paths(manifest: Dict[str, Any]) -> List[str]:
+    errors: List[str] = []
+
+    for section in ["valid_cases", "expected_invalid_cases"]:
+        for index, case in enumerate(manifest.get(section, [])):
+            case_id = case.get("case_id", f"{section}[{index}]")
+            schema_path = case.get("schema_path")
+            artifact_path = case.get("artifact_path")
+
+            if schema_path:
+                resolved_schema_path = ROOT / schema_path
+                if not resolved_schema_path.exists():
+                    errors.append(f"{case_id}: schema_path does not exist: {schema_path}")
+                elif not resolved_schema_path.is_file():
+                    errors.append(f"{case_id}: schema_path is not a file: {schema_path}")
+
+            if artifact_path:
+                resolved_artifact_path = ROOT / artifact_path
+                if not resolved_artifact_path.exists():
+                    errors.append(f"{case_id}: artifact_path does not exist: {artifact_path}")
+                elif not resolved_artifact_path.is_file():
+                    errors.append(f"{case_id}: artifact_path is not a file: {artifact_path}")
+
+    return errors
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate repository artifacts against declared schemas.")
     parser.add_argument(
@@ -151,6 +177,19 @@ def main() -> None:
         failures.extend(f"  - {error}" for error in manifest_errors)
     else:
         print(f"VALID MANIFEST: {args.manifest} against {MANIFEST_SCHEMA.relative_to(ROOT)}")
+
+    path_errors = validate_manifest_paths(manifest)
+    if path_errors:
+        failures.append(f"Validation manifest contains missing or invalid paths: {args.manifest}")
+        failures.extend(f"  - {error}" for error in path_errors)
+    else:
+        print("VALID MANIFEST PATHS: all declared schema_path and artifact_path entries exist")
+
+    if failures:
+        print("Schema validation failures:")
+        for failure in failures:
+            print(failure)
+        raise SystemExit(1)
 
     for case in manifest.get("valid_cases", []):
         schema_path = case["schema_path"]
