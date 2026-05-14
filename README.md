@@ -56,6 +56,7 @@ It demonstrates how to:
 - demonstrate failure modes with executable negative tests
 - validate known artifacts against repository schemas using a declared validation manifest
 - validate the validation manifest against its own schema
+- verify that declared manifest paths point to existing files
 - map validation coverage across expected-valid and expected-invalid cases
 - catalog schemas and artifact type names for reviewer consistency
 - map governance declarations against independently verifiable evidence boundaries
@@ -144,7 +145,7 @@ Run canonical hashing regression checks:
 python reference-implementation/python/test_canonical_hashing.py
 ```
 
-Validate known artifacts against schemas:
+Validate known artifacts against schemas and check manifest paths:
 
 ```bash
 python reference-implementation/python/validate_artifact_schemas.py
@@ -273,7 +274,7 @@ A lightweight dependency-free check that validates known repository artifacts ag
 
 ### Artifact Validation Manifest
 
-A reviewable manifest that declares which artifacts are validated against which schemas, including expected-valid and expected-invalid cases. The manifest itself is validated against `schema/artifact-validation-manifest.schema.json`.
+A reviewable manifest that declares which artifacts are validated against which schemas, including expected-valid and expected-invalid cases. The manifest itself is validated against `schema/artifact-validation-manifest.schema.json`, and declared paths are checked for existence before artifact validation runs.
 
 ### Validation Coverage Index
 
@@ -417,6 +418,7 @@ This repository includes a GitHub Actions workflow that:
 
 - validates all JSON files parse correctly
 - validates the artifact validation manifest against its schema
+- verifies declared schema and artifact paths exist
 - validates known artifacts against repository schemas using the artifact validation manifest
 - validates the audit package manifest
 - validates the governance boundary map structure
