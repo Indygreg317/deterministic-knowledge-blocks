@@ -47,6 +47,12 @@ The Bell-state minimal package now indexes the persisted schema validation repor
 validation/reports/schema-validation-report.json
 ```
 
+Audit package validation coverage is documented in:
+
+```text
+docs/validation-coverage-index.md
+```
+
 ## Review Questions
 
 An audit package should help a reviewer answer:
@@ -59,6 +65,7 @@ What receipt was produced?
 Was the receipt verified?
 What verification report was produced?
 Were declared artifact shapes and validation outcomes checked?
+Do all declared audit package artifact paths resolve?
 What claims remain outside the verification boundary?
 How can the reviewer replay or inspect the chain?
 ```
@@ -91,6 +98,12 @@ It can also support this narrower schema-validation claim when a schema validati
 
 ```text
 The declared validation manifest and listed artifact cases were checked, and the results were recorded in a structured report.
+```
+
+It can also support this path-consistency claim:
+
+```text
+The audit package manifest declares artifact paths that currently resolve inside the repository.
 ```
 
 It does not automatically support this claim:
