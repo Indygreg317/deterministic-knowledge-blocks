@@ -2,6 +2,10 @@
 """
 Lightweight artifact schema validation for known repository examples.
 
+Validation targets are declared in:
+
+    validation/artifact-validation-manifest.json
+
 This intentionally avoids third-party dependencies so CI can validate core
 schemas with only the Python standard library.
 
@@ -20,32 +24,13 @@ It is not a complete JSON Schema implementation.
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List
 
 ROOT = Path(__file__).resolve().parents[2]
-
-VALID_CASES: List[Tuple[str, str]] = [
-    ("schema/decision-contract.schema.json", "use-cases/quantum/examples/bell-state-correlation-contract.json"),
-    ("schema/evaluator-policy.schema.json", "use-cases/quantum/examples/evaluator-policy-basic.json"),
-    ("schema/quantum-output.schema.json", "use-cases/quantum/examples/bell-state-output-pass.json"),
-    ("schema/quantum-output.schema.json", "use-cases/quantum/examples/bell-state-output-fail.json"),
-    ("schema/execution-receipt.schema.json", "use-cases/quantum/examples/bell-state-receipt-pass.json"),
-    ("schema/execution-receipt.schema.json", "use-cases/quantum/examples/bell-state-receipt-tampered-status.json"),
-    ("schema/verification-report.schema.json", "use-cases/quantum/examples/bell-state-verification-report-pass.json"),
-    ("schema/verification-report.schema.json", "use-cases/quantum/examples/bell-state-verification-report-tampered-status.json"),
-    ("schema/governance-boundary-map.schema.json", "use-cases/quantum/examples/bell-state-governance-boundary-map.json"),
-    ("schema/audit-package-manifest.schema.json", "audit-packages/bell-state-minimal/audit-package-manifest.json"),
-]
-
-EXPECTED_INVALID_CASES: List[Tuple[str, str, str]] = [
-    (
-        "schema/decision-contract.schema.json",
-        "use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json",
-        "unsupported operator should fail current Decision Contract schema",
-    ),
-]
+DEFAULT_MANIFEST = ROOT / "validation" / "artifact-validation-manifest.json"
 
 
 def load_json(path: Path) -> Any:
@@ -111,29 +96,72 @@ def validate(schema: Dict[str, Any], value: Any, path: str = "$") -> List[str]:
     return errors
 
 
-def validate_case(schema_path: str, artifact_path: str) -> List[str]:
-    schema = load_json(ROOT / schema_path)
-    artifact = load_json(ROOT / artifact_path)
+def validate_case(case: Dict[str, Any]) -> List[str]:
+    schema = load_json(ROOT / case["schema_path"])
+    artifact = load_json(ROOT / case["artifact_path"])
     return validate(schema, artifact)
 
 
+def validate_manifest_shape(manifest: Dict[str, Any]) -> List[str]:
+    errors: List[str] = []
+    required = ["manifest_id", "manifest_version", "purpose", "valid_cases", "expected_invalid_cases"]
+    for field in required:
+        if field not in manifest:
+            errors.append(f"manifest: missing required field {field!r}")
+
+    case_required = ["case_id", "schema_path", "artifact_path", "artifact_type"]
+    for section in ["valid_cases", "expected_invalid_cases"]:
+        for index, case in enumerate(manifest.get(section, [])):
+            for field in case_required:
+                if field not in case:
+                    errors.append(f"manifest.{section}[{index}]: missing required field {field!r}")
+            if section == "expected_invalid_cases" and "expected_failure_reason" not in case:
+                errors.append(f"manifest.{section}[{index}]: missing required field 'expected_failure_reason'")
+
+    return errors
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Validate repository artifacts against declared schemas.")
+    parser.add_argument(
+        "--manifest",
+        type=Path,
+        default=DEFAULT_MANIFEST,
+        help="Path to artifact validation manifest.",
+    )
+    args = parser.parse_args()
+
+    manifest = load_json(args.manifest)
     failures: List[str] = []
 
-    for schema_path, artifact_path in VALID_CASES:
-        errors = validate_case(schema_path, artifact_path)
+    manifest_errors = validate_manifest_shape(manifest)
+    if manifest_errors:
+        failures.extend(manifest_errors)
+
+    for case in manifest.get("valid_cases", []):
+        schema_path = case["schema_path"]
+        artifact_path = case["artifact_path"]
+        case_id = case["case_id"]
+        errors = validate_case(case)
         if errors:
-            failures.append(f"Expected valid artifact failed schema validation: {artifact_path} against {schema_path}")
+            failures.append(
+                f"Expected valid artifact failed schema validation: {case_id} ({artifact_path} against {schema_path})"
+            )
             failures.extend(f"  - {error}" for error in errors)
         else:
-            print(f"VALID: {artifact_path} against {schema_path}")
+            print(f"VALID: {case_id} ({artifact_path} against {schema_path})")
 
-    for schema_path, artifact_path, reason in EXPECTED_INVALID_CASES:
-        errors = validate_case(schema_path, artifact_path)
+    for case in manifest.get("expected_invalid_cases", []):
+        schema_path = case["schema_path"]
+        artifact_path = case["artifact_path"]
+        case_id = case["case_id"]
+        reason = case.get("expected_failure_reason", "expected invalid case")
+        errors = validate_case(case)
         if not errors:
-            failures.append(f"Expected invalid artifact passed schema validation: {artifact_path} ({reason})")
+            failures.append(f"Expected invalid artifact passed schema validation: {case_id} ({reason})")
         else:
-            print(f"EXPECTED INVALID: {artifact_path} against {schema_path} ({reason})")
+            print(f"EXPECTED INVALID: {case_id} ({artifact_path} against {schema_path})")
+            print(f"  reason: {reason}")
             for error in errors:
                 print(f"  - {error}")
 
