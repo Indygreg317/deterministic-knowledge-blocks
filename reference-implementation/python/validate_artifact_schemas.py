@@ -158,6 +158,19 @@ def validate_manifest_paths(manifest: Dict[str, Any]) -> List[str]:
     return errors
 
 
+def print_summary(valid_passed: int, expected_invalid_passed: int, manifest_checks: int) -> None:
+    total_artifact_cases = valid_passed + expected_invalid_passed
+    total_checks = manifest_checks + total_artifact_cases
+
+    print("\nValidation summary")
+    print("------------------")
+    print(f"Manifest checks passed: {manifest_checks}")
+    print(f"Expected-valid artifact cases passed: {valid_passed}")
+    print(f"Expected-invalid artifact cases failed as expected: {expected_invalid_passed}")
+    print(f"Total artifact cases checked: {total_artifact_cases}")
+    print(f"Total validation checks passed: {total_checks}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate repository artifacts against declared schemas.")
     parser.add_argument(
@@ -170,12 +183,16 @@ def main() -> None:
 
     manifest = load_json(args.manifest)
     failures: List[str] = []
+    manifest_checks_passed = 0
+    valid_cases_passed = 0
+    expected_invalid_cases_passed = 0
 
     manifest_errors = validate_manifest_against_schema(manifest)
     if manifest_errors:
         failures.append(f"Validation manifest failed schema validation: {args.manifest}")
         failures.extend(f"  - {error}" for error in manifest_errors)
     else:
+        manifest_checks_passed += 1
         print(f"VALID MANIFEST: {args.manifest} against {MANIFEST_SCHEMA.relative_to(ROOT)}")
 
     path_errors = validate_manifest_paths(manifest)
@@ -183,6 +200,7 @@ def main() -> None:
         failures.append(f"Validation manifest contains missing or invalid paths: {args.manifest}")
         failures.extend(f"  - {error}" for error in path_errors)
     else:
+        manifest_checks_passed += 1
         print("VALID MANIFEST PATHS: all declared schema_path and artifact_path entries exist")
 
     if failures:
@@ -202,6 +220,7 @@ def main() -> None:
             )
             failures.extend(f"  - {error}" for error in errors)
         else:
+            valid_cases_passed += 1
             print(f"VALID: {case_id} ({artifact_path} against {schema_path})")
 
     for case in manifest.get("expected_invalid_cases", []):
@@ -213,6 +232,7 @@ def main() -> None:
         if not errors:
             failures.append(f"Expected invalid artifact passed schema validation: {case_id} ({reason})")
         else:
+            expected_invalid_cases_passed += 1
             print(f"EXPECTED INVALID: {case_id} ({artifact_path} against {schema_path})")
             print(f"  reason: {reason}")
             for error in errors:
@@ -224,6 +244,7 @@ def main() -> None:
             print(failure)
         raise SystemExit(1)
 
+    print_summary(valid_cases_passed, expected_invalid_cases_passed, manifest_checks_passed)
     print("Artifact schema validation completed successfully.")
 
 
