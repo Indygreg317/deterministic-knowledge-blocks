@@ -13,20 +13,26 @@ This repository provides a reference framework for converting structured uncerta
 
 For a fast review path, start with:
 
-```text
-docs/reviewer-handoff-index.md
-```
+- [Reviewer Handoff Index](docs/reviewer-handoff-index.md)
+- [Verification Documentation](docs/verification/README.md)
+- [Verification Evidence Index](docs/verification/evidence-index.md)
 
 The handoff index explains what to inspect first, what commands to run, what each artifact proves, and what remains outside the verification boundary.
 
 Additional orientation documents:
 
-```text
-docs/project-status.md
-docs/glossary.md
-docs/examples-index.md
-docs/roadmap.md
-```
+- [Project Status](docs/project-status.md)
+- [Glossary](docs/glossary.md)
+- [Examples Index](docs/examples-index.md)
+- [Roadmap](docs/roadmap.md)
+
+---
+
+## Verification Evidence
+
+This repository treats verification evidence as a first-class part of deterministic governance. Claims should be supported by schemas, tests, examples, receipts, replay paths, verification reports, boundary maps, or independently reviewable artifacts.
+
+Start with the [Verification Evidence Index](docs/verification/evidence-index.md).
 
 ---
 
@@ -302,6 +308,8 @@ docs/project-status.md
 docs/glossary.md
 docs/examples-index.md
 docs/roadmap.md
+docs/verification/README.md
+docs/verification/evidence-index.md
 docs/deterministic-evaluation.md
 docs/decision-contracts.md
 docs/replay-and-receipts.md

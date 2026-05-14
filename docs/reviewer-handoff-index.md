@@ -12,6 +12,8 @@ Start here:
 
 ```text
 README.md
+docs/verification/README.md
+docs/verification/evidence-index.md
 ```
 
 Then inspect the minimal audit package:

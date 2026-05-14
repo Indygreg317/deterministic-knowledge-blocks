@@ -4,6 +4,17 @@
 
 This index helps reviewers find the repository's runnable examples, evidence artifacts, failure modes, and audit package entry points.
 
+## Verification Evidence Entry Point
+
+For the repo-level evidence map, start with:
+
+```text
+docs/verification/README.md
+docs/verification/evidence-index.md
+```
+
+These documents map present and planned verification evidence categories across schemas, tests, examples, receipts, verification reports, boundary maps, and audit packages.
+
 ## Primary Bell-State Example
 
 ### Structured Input Artifact
