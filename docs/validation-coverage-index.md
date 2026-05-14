@@ -34,6 +34,12 @@ The validator is:
 reference-implementation/python/validate_artifact_schemas.py
 ```
 
+Audit package path consistency is checked in:
+
+```text
+.github/workflows/validate-json.yml
+```
+
 ## Manifest Self-Validation
 
 | Case | Schema | Artifact | Expected |
@@ -64,6 +70,26 @@ This proves the validation manifest is not only reviewable JSON. It is schema-bo
 |---|---|---|---|---|---|
 | unsupported-operator-contract | decision_contract | `schema/decision-contract.schema.json` | `use-cases/quantum/examples/failure-modes/bell-state-unsupported-operator-contract.json` | invalid | Uses `median_gte`, which is intentionally outside the allowed operator enum. |
 
+## Audit Package CI Coverage
+
+The Bell-state audit package is also checked by CI as a reviewer-facing evidence index.
+
+| Coverage Item | Location | Expected |
+|---|---|---|
+| Audit package required fields | `.github/workflows/validate-json.yml` | `audit_package_id`, `audit_package_version`, `purpose`, `package_scope`, `artifacts`, `verification_summary`, and `review_boundaries` are present. |
+| Artifact entry fields | `.github/workflows/validate-json.yml` | Each artifact entry declares `artifact_type`, `path`, `role`, and `required_for_review`. |
+| Artifact path consistency | `.github/workflows/validate-json.yml` | Every declared artifact path resolves inside the repository. |
+| Required review artifact count | `.github/workflows/validate-json.yml` | At least seven required review artifacts are present, including schema validation report evidence. |
+| Expected verification status | `.github/workflows/validate-json.yml` | The audit package declares `VALID_RECEIPT` as the expected verification status. |
+
+This coverage supports this narrow claim:
+
+```text
+The audit package manifest is structurally inspectable and its declared artifact paths currently resolve inside the repository.
+```
+
+It does not mean the listed artifacts prove upstream truth, production readiness, compliance, or total system safety.
+
 ## Important Distinction
 
 Some artifacts are expected to be schema-valid even when they represent an invalid governance outcome.
@@ -81,6 +107,7 @@ That distinction matters:
 ```text
 Schema validation checks artifact shape.
 Receipt verification checks artifact truth against preserved evidence and deterministic replay.
+Audit package path consistency checks whether declared evidence paths resolve.
 ```
 
 ## Current Coverage Summary
@@ -90,7 +117,8 @@ Manifest self-validation: 1
 Manifest path consistency: 1
 Expected-valid artifact cases: 11
 Expected-invalid schema cases: 1
-Total declared validation checks: 14
+Audit package CI coverage items: 5
+Total declared schema validation checks: 14
 ```
 
 ## Known Boundaries
@@ -104,10 +132,12 @@ Current validation coverage does not prove:
 - production readiness
 - semantic equivalence beyond the declared schema rules
 
-It supports this narrower claim:
+It supports these narrower claims:
 
 ```text
 The declared validation manifest and listed artifacts are checked against declared schemas, and expected-invalid cases fail for declared reasons.
+
+The audit package manifest declares artifact paths that currently resolve inside the repository.
 ```
 
 ## Next Coverage Candidates
