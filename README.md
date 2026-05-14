@@ -64,6 +64,7 @@ It demonstrates how to:
 - document audit package CI coverage for reviewer inspection
 - catalog schemas and artifact type names for reviewer consistency
 - define governance record shape for declaration artifacts
+- provide a minimal governance record example for reviewer orientation
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
 - index schema validation report evidence inside audit packages
@@ -187,6 +188,12 @@ Review schema and artifact naming references:
 docs/schema-catalog.md
 docs/artifact-type-registry.md
 schema/governance-record.schema.json
+```
+
+Review the Bell-state governance record example:
+
+```text
+use-cases/quantum/examples/bell-state-governance-record.json
 ```
 
 Verify the baseline PASS receipt:
@@ -432,6 +439,7 @@ use-cases/quantum/examples/bell-state-receipt-fail.json
 use-cases/quantum/examples/bell-state-receipt-tampered-status.json
 use-cases/quantum/examples/bell-state-verification-report-pass.json
 use-cases/quantum/examples/bell-state-verification-report-tampered-status.json
+use-cases/quantum/examples/bell-state-governance-record.json
 use-cases/quantum/examples/bell-state-governance-boundary-map.json
 use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json
 use-cases/quantum/examples/failure-modes/bell-state-receipt-stale-contract-hash.json

@@ -17,7 +17,7 @@ It is intended for reviewers, contributors, partners, and external verifiers who
 | `schema/quantum-output.schema.json` | Quantum-output-style structured input artifacts | `use-cases/quantum/examples/bell-state-output-pass.json` | Defines preserved probabilistic input shape for the Bell-state example. |
 | `schema/execution-receipt.schema.json` | Execution Receipt artifacts | `use-cases/quantum/examples/bell-state-receipt-pass.json` | Defines claimed decision record and supporting artifact references. |
 | `schema/verification-report.schema.json` | Verification Report artifacts | `use-cases/quantum/examples/bell-state-verification-report-pass.json` | Defines verifier output, checked fields, checked artifacts, mismatches, and report hash. |
-| `schema/governance-record.schema.json` | Governance Record artifacts | Planned | Defines declaration artifact shape for scope, authority context, policy references, continuity assumptions, linked evidence, and boundary statements. |
+| `schema/governance-record.schema.json` | Governance Record artifacts | `use-cases/quantum/examples/bell-state-governance-record.json` | Defines declaration artifact shape for scope, authority context, policy references, continuity assumptions, linked evidence, and boundary statements. |
 | `schema/governance-boundary-map.schema.json` | Governance Boundary Map artifacts | `use-cases/quantum/examples/bell-state-governance-boundary-map.json` | Separates declared claims from independently verifiable claims. |
 | `schema/audit-package-manifest.schema.json` | Audit Package manifests | `audit-packages/bell-state-minimal/audit-package-manifest.json` | Defines reviewer-facing bundle of evidence references and review boundaries. |
 | `schema/artifact-validation-manifest.schema.json` | Artifact Validation Manifest | `validation/artifact-validation-manifest.json` | Defines schema-validation coverage configuration. |
@@ -225,7 +225,7 @@ Defines declaration artifact shape for governance context and linked evidence re
 Primary example:
 
 ```text
-Planned
+use-cases/quantum/examples/bell-state-governance-record.json
 ```
 
 Important distinction:
@@ -327,6 +327,8 @@ listed schema/artifact pairs
   ↓
 expected-valid or expected-invalid result
 ```
+
+The Bell-state governance record example is intentionally not added to validation manifest coverage in this PR.
 
 ## Boundary
 
