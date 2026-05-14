@@ -1,7 +1,7 @@
 {
   "audit_package_id": "bell-state-minimal-audit-package",
   "audit_package_version": "0.1.0",
-  "purpose": "Minimal reviewer package for deterministic Bell-state evaluation, receipt verification, and governance boundary inspection.",
+  "purpose": "Minimal reviewer package for deterministic Bell-state evaluation, receipt verification, schema validation evidence, and governance boundary inspection.",
   "package_scope": "Reference quantum-output evaluation example using preserved artifacts already stored in the repository.",
   "artifacts": [
     {
@@ -38,6 +38,12 @@
       "required_for_review": true
     },
     {
+      "artifact_type": "schema_validation_report",
+      "path": "validation/reports/schema-validation-report.json",
+      "role": "Records manifest checks, artifact schema case results, expected-invalid behavior, summary counts, and failures for schema-validation evidence.",
+      "required_for_review": true
+    },
+    {
       "artifact_type": "governance_boundary_map",
       "path": "use-cases/quantum/examples/bell-state-governance-boundary-map.json",
       "role": "Separates declarations from independently verifiable evidence boundaries.",
@@ -56,6 +62,7 @@
     "verifier": "reference-receipt-verifier",
     "notes": [
       "The receipt is expected to survive deterministic verification against the preserved input artifact, Decision Contract, and Evaluator Policy.",
+      "The schema validation report is included as evidence that declared artifact shapes and validation outcomes were checked.",
       "This package does not claim that the upstream source was deterministic, truthful, safe, or complete."
     ]
   },
@@ -63,16 +70,19 @@
     "Reviewers can verify artifact identity using canonical hashes.",
     "Reviewers can replay the deterministic evaluation using the reference evaluator.",
     "Reviewers can verify the receipt using the reference verifier.",
+    "Reviewers can inspect schema validation evidence for artifact shape and declared validation outcomes.",
     "Reviewers can inspect the Governance Boundary Map to see what is declared, what is verifiable, and what is outside scope."
   ],
   "review_commands": [
     "python reference-implementation/python/canonical_hash.py use-cases/quantum/examples/bell-state-output-pass.json",
+    "python reference-implementation/python/validate_artifact_schemas.py --manifest validation/artifact-validation-manifest.json --save-report /tmp/schema-validation-report.json",
     "python reference-implementation/python/evaluate_decision_contract.py --output use-cases/quantum/examples/bell-state-output-pass.json",
     "python reference-implementation/python/verify_receipt.py --receipt use-cases/quantum/examples/bell-state-receipt-pass.json --expect VALID_RECEIPT",
     "python reference-implementation/python/verify_receipt.py --receipt use-cases/quantum/examples/failure-modes/bell-state-receipt-tampered-threshold.json --expect INVALID_RECEIPT"
   ],
   "notes": [
     "This manifest intentionally references existing repository artifacts instead of duplicating them.",
-    "The audit package is designed for review, demonstration, and reproducibility, not production certification."
+    "The audit package is designed for review, demonstration, and reproducibility, not production certification.",
+    "Schema validation evidence checks artifact shape and declared validation outcomes; receipt verification checks claims against preserved evidence and deterministic replay."
   ]
 }

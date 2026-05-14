@@ -19,6 +19,7 @@ The manifest indexes:
 - Evaluator Policy
 - Execution Receipt
 - Verification Report
+- Schema Validation Report
 - Governance Boundary Map
 - optional failure-mode examples
 
@@ -31,6 +32,8 @@ Decision Contract
   ↓
 Evaluator Policy
   ↓
+Schema Validation Report
+  ↓
 Deterministic Evaluation
   ↓
 Execution Receipt
@@ -42,6 +45,18 @@ Verification Report
 Governance Boundary Map
 ```
 
+## Schema Validation Evidence
+
+The audit package indexes the persisted schema validation report:
+
+```text
+validation/reports/schema-validation-report.json
+```
+
+That report records manifest checks, artifact schema case results, expected-invalid behavior, summary counts, and failures if present.
+
+This evidence supports the narrow claim that declared artifact shapes and declared validation outcomes were checked. It does not prove upstream truth, scientific correctness, regulatory sufficiency, production readiness, or total system safety.
+
 ## Review Commands
 
 From the repository root, compute the input artifact hash:
@@ -49,6 +64,14 @@ From the repository root, compute the input artifact hash:
 ```bash
 python reference-implementation/python/canonical_hash.py \
   use-cases/quantum/examples/bell-state-output-pass.json
+```
+
+Regenerate a schema validation report for comparison:
+
+```bash
+python reference-implementation/python/validate_artifact_schemas.py \
+  --manifest validation/artifact-validation-manifest.json \
+  --save-report /tmp/schema-validation-report.json
 ```
 
 Run the deterministic evaluator:
@@ -78,9 +101,11 @@ python reference-implementation/python/verify_receipt.py \
 
 This package does not prove that the upstream quantum source was deterministic, truthful, safe, or complete.
 
-It demonstrates the narrower governance claim:
+It demonstrates two narrower governance claims:
 
 ```text
+The declared artifact shapes and validation outcomes can be inspected through the schema validation report.
+
 The preserved receipt can be checked against preserved artifacts and a recomputed deterministic decision.
 ```
 
