@@ -52,6 +52,7 @@ It demonstrates how to:
 - define canonical hashing rules for stable artifact identity
 - demonstrate failure modes with executable negative tests
 - validate known artifacts against repository schemas using a declared validation manifest
+- validate the validation manifest against its own schema
 - map governance declarations against independently verifiable evidence boundaries
 - package the evidence chain into reviewer-facing audit packages
 - preserve auditability and replay boundaries
@@ -144,10 +145,11 @@ Validate known artifacts against schemas:
 python reference-implementation/python/validate_artifact_schemas.py
 ```
 
-Review the declared validation manifest:
+Review the declared validation manifest and its schema:
 
 ```text
 validation/artifact-validation-manifest.json
+schema/artifact-validation-manifest.schema.json
 ```
 
 Verify the baseline PASS receipt:
@@ -258,7 +260,7 @@ A lightweight dependency-free check that validates known repository artifacts ag
 
 ### Artifact Validation Manifest
 
-A reviewable manifest that declares which artifacts are validated against which schemas, including expected-valid and expected-invalid cases.
+A reviewable manifest that declares which artifacts are validated against which schemas, including expected-valid and expected-invalid cases. The manifest itself is validated against `schema/artifact-validation-manifest.schema.json`.
 
 ### Deterministic Outcome
 
@@ -321,6 +323,7 @@ schema/execution-receipt.schema.json
 schema/verification-report.schema.json
 schema/governance-boundary-map.schema.json
 schema/audit-package-manifest.schema.json
+schema/artifact-validation-manifest.schema.json
 schema/decision-contract.schema.json
 schema/quantum-output.schema.json
 schema/evaluator-policy.schema.json
@@ -385,6 +388,7 @@ reference-implementation/python/verify_receipt.py
 This repository includes a GitHub Actions workflow that:
 
 - validates all JSON files parse correctly
+- validates the artifact validation manifest against its schema
 - validates known artifacts against repository schemas using the artifact validation manifest
 - validates the audit package manifest
 - validates the governance boundary map structure

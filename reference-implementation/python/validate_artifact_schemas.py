@@ -18,6 +18,7 @@ It supports the subset of JSON Schema currently used by this repository:
 - enum
 - array items
 - nullable type lists such as ["string", "null"]
+- local $ref entries into #/$defs
 
 It is not a complete JSON Schema implementation.
 """
@@ -31,6 +32,7 @@ from typing import Any, Dict, List
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = ROOT / "validation" / "artifact-validation-manifest.json"
+MANIFEST_SCHEMA = ROOT / "schema" / "artifact-validation-manifest.schema.json"
 
 
 def load_json(path: Path) -> Any:
@@ -56,8 +58,31 @@ def is_type(value: Any, expected_type: str) -> bool:
     return True
 
 
-def validate(schema: Dict[str, Any], value: Any, path: str = "$") -> List[str]:
+def resolve_ref(schema_root: Dict[str, Any], ref: str) -> Dict[str, Any]:
+    if not ref.startswith("#/"):
+        raise ValueError(f"Only local refs are supported by the lightweight validator: {ref}")
+
+    current: Any = schema_root
+    for part in ref[2:].split("/"):
+        if not isinstance(current, dict) or part not in current:
+            raise ValueError(f"Unresolvable local ref: {ref}")
+        current = current[part]
+
+    if not isinstance(current, dict):
+        raise ValueError(f"Resolved ref does not point to an object schema: {ref}")
+    return current
+
+
+def validate(schema: Dict[str, Any], value: Any, path: str = "$", schema_root: Dict[str, Any] | None = None) -> List[str]:
     errors: List[str] = []
+    root = schema_root or schema
+
+    if "$ref" in schema:
+        try:
+            resolved = resolve_ref(root, schema["$ref"])
+        except ValueError as exc:
+            return [f"{path}: {exc}"]
+        return validate(resolved, value, path, root)
 
     expected_type = schema.get("type")
     if isinstance(expected_type, list):
@@ -86,12 +111,12 @@ def validate(schema: Dict[str, Any], value: Any, path: str = "$") -> List[str]:
 
         for field, field_schema in properties.items():
             if field in value:
-                errors.extend(validate(field_schema, value[field], f"{path}.{field}"))
+                errors.extend(validate(field_schema, value[field], f"{path}.{field}", root))
 
     if isinstance(value, list) and "items" in schema:
         item_schema = schema["items"]
         for index, item in enumerate(value):
-            errors.extend(validate(item_schema, item, f"{path}[{index}]"))
+            errors.extend(validate(item_schema, item, f"{path}[{index}]", root))
 
     return errors
 
@@ -102,23 +127,9 @@ def validate_case(case: Dict[str, Any]) -> List[str]:
     return validate(schema, artifact)
 
 
-def validate_manifest_shape(manifest: Dict[str, Any]) -> List[str]:
-    errors: List[str] = []
-    required = ["manifest_id", "manifest_version", "purpose", "valid_cases", "expected_invalid_cases"]
-    for field in required:
-        if field not in manifest:
-            errors.append(f"manifest: missing required field {field!r}")
-
-    case_required = ["case_id", "schema_path", "artifact_path", "artifact_type"]
-    for section in ["valid_cases", "expected_invalid_cases"]:
-        for index, case in enumerate(manifest.get(section, [])):
-            for field in case_required:
-                if field not in case:
-                    errors.append(f"manifest.{section}[{index}]: missing required field {field!r}")
-            if section == "expected_invalid_cases" and "expected_failure_reason" not in case:
-                errors.append(f"manifest.{section}[{index}]: missing required field 'expected_failure_reason'")
-
-    return errors
+def validate_manifest_against_schema(manifest: Dict[str, Any]) -> List[str]:
+    schema = load_json(MANIFEST_SCHEMA)
+    return validate(schema, manifest)
 
 
 def main() -> None:
@@ -134,9 +145,12 @@ def main() -> None:
     manifest = load_json(args.manifest)
     failures: List[str] = []
 
-    manifest_errors = validate_manifest_shape(manifest)
+    manifest_errors = validate_manifest_against_schema(manifest)
     if manifest_errors:
-        failures.extend(manifest_errors)
+        failures.append(f"Validation manifest failed schema validation: {args.manifest}")
+        failures.extend(f"  - {error}" for error in manifest_errors)
+    else:
+        print(f"VALID MANIFEST: {args.manifest} against {MANIFEST_SCHEMA.relative_to(ROOT)}")
 
     for case in manifest.get("valid_cases", []):
         schema_path = case["schema_path"]
