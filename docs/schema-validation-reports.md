@@ -41,6 +41,12 @@ and validated against:
 schema/schema-validation-report.schema.json
 ```
 
+It is also indexed by the Bell-state minimal audit package as reviewable evidence:
+
+```text
+audit-packages/bell-state-minimal/audit-package-manifest.json
+```
+
 ## Validator Command
 
 Generate a report from the repository root:
@@ -114,6 +120,8 @@ That makes it easier to include schema validation results in:
 - review records
 - CI artifacts
 - governance evidence chains
+
+In an audit package, the schema validation report provides artifact-shape and declared-outcome evidence alongside receipt verification evidence. It does not replace receipt verification, deterministic replay, or governance boundary review.
 
 ## Boundary
 
