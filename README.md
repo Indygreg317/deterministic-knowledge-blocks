@@ -57,6 +57,7 @@ It demonstrates how to:
 - validate known artifacts against repository schemas using a declared validation manifest
 - validate the validation manifest against its own schema
 - verify that declared manifest paths point to existing files
+- summarize validation results for reviewer readability
 - map validation coverage across expected-valid and expected-invalid cases
 - catalog schemas and artifact type names for reviewer consistency
 - map governance declarations against independently verifiable evidence boundaries
@@ -150,6 +151,8 @@ Validate known artifacts against schemas and check manifest paths:
 ```bash
 python reference-implementation/python/validate_artifact_schemas.py
 ```
+
+Successful validation ends with a compact summary of manifest checks, expected-valid cases, expected-invalid cases, artifact cases, and total checks.
 
 Review the declared validation manifest, schema, and coverage index:
 
@@ -420,6 +423,7 @@ This repository includes a GitHub Actions workflow that:
 - validates the artifact validation manifest against its schema
 - verifies declared schema and artifact paths exist
 - validates known artifacts against repository schemas using the artifact validation manifest
+- reports validation summary counts
 - validates the audit package manifest
 - validates the governance boundary map structure
 - runs canonical hashing regression checks
