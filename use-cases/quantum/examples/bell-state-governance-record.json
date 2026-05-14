@@ -1,0 +1,153 @@
+{
+  "governance_record_id": "bell-state-governance-record-minimal-v0.3",
+  "governance_record_version": "0.3.0",
+  "purpose": "Declare governance context, assumptions, and linked evidence for the Bell-state deterministic evaluation example.",
+  "scope": {
+    "declared_scope": "Bell-state quantum output evaluation using the repository's deterministic downstream decision contract example.",
+    "scope_boundary": "This record is limited to repository-local example artifacts and reviewer-facing evidence paths for the Bell-state example.",
+    "out_of_scope": [
+      "upstream quantum system truth",
+      "scientific correctness beyond the preserved example artifacts",
+      "production quantum control",
+      "regulatory sufficiency",
+      "certification",
+      "legal compliance",
+      "total system safety"
+    ]
+  },
+  "authority_context": {
+    "declared_authority": "Repository example governance context for deterministic-knowledge-blocks reference architecture.",
+    "authority_mode": "declared",
+    "authority_reference": "docs/governance-records.md",
+    "notes": [
+      "This authority context is declared for the example only.",
+      "The declaration does not prove external authority, certification status, or production readiness."
+    ]
+  },
+  "policy_references": [
+    {
+      "policy_reference_id": "bell-state-evaluator-policy-basic",
+      "policy_reference_type": "evaluator_policy",
+      "declared_policy": "Basic evaluator policy used by the Bell-state example.",
+      "path": "use-cases/quantum/examples/evaluator-policy-basic.json",
+      "notes": [
+        "This record references the policy path for review.",
+        "Policy path reference does not prove policy sufficiency."
+      ]
+    }
+  ],
+  "continuity_assumptions": [
+    {
+      "assumption_id": "bell-state-policy-continuity-assumption",
+      "assumption_type": "policy_continuity",
+      "declared_assumption": "The referenced evaluator policy is the intended policy for the linked Bell-state evaluation artifacts.",
+      "verification_status": "LINKED_EVIDENCE",
+      "linked_evidence_ids": [
+        "evaluator-policy-basic",
+        "bell-state-governance-boundary-map"
+      ],
+      "notes": [
+        "This assumption is linked to repository evidence paths.",
+        "This record does not independently prove policy continuity across time or systems."
+      ]
+    },
+    {
+      "assumption_id": "bell-state-receipt-linkage-assumption",
+      "assumption_type": "receipt_linkage",
+      "declared_assumption": "The linked execution receipt and verification report belong to the same Bell-state example evidence chain.",
+      "verification_status": "LINKED_EVIDENCE",
+      "linked_evidence_ids": [
+        "bell-state-receipt-pass",
+        "bell-state-verification-report-pass"
+      ],
+      "notes": [
+        "Receipt validity must be checked through receipt verification, not through this governance record alone."
+      ]
+    },
+    {
+      "assumption_id": "bell-state-authority-continuity-assumption",
+      "assumption_type": "authority_continuity",
+      "declared_assumption": "No external authority transition is represented by this minimal repository example.",
+      "verification_status": "DECLARED_ONLY",
+      "notes": [
+        "This is a declared assumption only.",
+        "No independent authority verification is performed by this record."
+      ]
+    }
+  ],
+  "linked_evidence": [
+    {
+      "evidence_id": "bell-state-output-pass",
+      "artifact_type": "structured_input_artifact",
+      "path": "use-cases/quantum/examples/bell-state-output-pass.json",
+      "evidence_role": "Preserved structured input artifact for the PASS example.",
+      "verification_status": "DECLARED_ONLY",
+      "required_for_review": true
+    },
+    {
+      "evidence_id": "bell-state-decision-contract",
+      "artifact_type": "decision_contract",
+      "path": "use-cases/quantum/examples/bell-state-correlation-contract.json",
+      "evidence_role": "Deterministic evaluation rule used for the Bell-state example.",
+      "verification_status": "DECLARED_ONLY",
+      "required_for_review": true
+    },
+    {
+      "evidence_id": "evaluator-policy-basic",
+      "artifact_type": "evaluator_policy",
+      "path": "use-cases/quantum/examples/evaluator-policy-basic.json",
+      "evidence_role": "Evaluator policy declared for the Bell-state example.",
+      "verification_status": "DECLARED_ONLY",
+      "required_for_review": true
+    },
+    {
+      "evidence_id": "bell-state-receipt-pass",
+      "artifact_type": "execution_receipt",
+      "path": "use-cases/quantum/examples/bell-state-receipt-pass.json",
+      "evidence_role": "Execution receipt claimed for the Bell-state PASS evaluation.",
+      "verification_status": "VERIFIED",
+      "required_for_review": true
+    },
+    {
+      "evidence_id": "bell-state-verification-report-pass",
+      "artifact_type": "verification_report",
+      "path": "use-cases/quantum/examples/bell-state-verification-report-pass.json",
+      "evidence_role": "Verification report showing receipt verification output for the PASS example.",
+      "verification_status": "VERIFIED",
+      "required_for_review": true
+    },
+    {
+      "evidence_id": "bell-state-governance-boundary-map",
+      "artifact_type": "governance_boundary_map",
+      "path": "use-cases/quantum/examples/bell-state-governance-boundary-map.json",
+      "evidence_role": "Boundary map separating declarations from independently verifiable evidence.",
+      "verification_status": "SCHEMA_VALID",
+      "required_for_review": true
+    },
+    {
+      "evidence_id": "bell-state-minimal-audit-package",
+      "artifact_type": "audit_package_manifest",
+      "path": "audit-packages/bell-state-minimal/audit-package-manifest.json",
+      "evidence_role": "Reviewer-facing package index for the Bell-state evidence chain.",
+      "verification_status": "PATH_CONSISTENT",
+      "required_for_review": true
+    }
+  ],
+  "boundary_statement": {
+    "declaration_boundary": "This governance record declares scope, authority context, policy references, continuity assumptions, and linked evidence paths for the Bell-state example.",
+    "verification_boundary": "Independent checks remain limited to schema validation, path consistency where implemented, receipt verification, verification reports, and boundary maps.",
+    "non_claims": [
+      "This record does not prove upstream quantum truth.",
+      "This record does not prove external authority.",
+      "This record does not prove policy correctness or sufficiency.",
+      "This record does not prove continuity beyond the linked repository evidence.",
+      "This record does not create certification or compliance status.",
+      "This record does not establish production readiness."
+    ]
+  },
+  "review_notes": [
+    "This is a minimal example governance record for reviewer orientation.",
+    "The example is intended to demonstrate structure and boundary discipline before validation manifest coverage is added.",
+    "A later PR may add schema validation coverage for this artifact."
+  ]
+}
